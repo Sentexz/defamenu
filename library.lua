@@ -2282,11 +2282,11 @@ Menu.TopLevelTabs = {
 -- Inicializar el menú con la primera pestaña
 Menu.UpdateCategoriesFromTopTab()
 
--- Por defecto, el menú no es visible hasta que presiones la tecla (por defecto '1')
+-- Por defecto, el menú no es visible hasta que presiones la tecla (Page Down)
 Menu.Visible = false
--- La tecla por defecto para abrir/cerrar (0x31 = tecla '1')
-Menu.SelectedKey = 0x31
-Menu.SelectedKeyName = "1"
+-- La tecla por defecto para abrir/cerrar (0x79 = Page Down)
+Menu.SelectedKey = 0x79
+Menu.SelectedKeyName = "Page Down"
 
 -- Aplicar el tema por defecto (esto también cargará el banner)
 Menu.ApplyTheme("Purple")
