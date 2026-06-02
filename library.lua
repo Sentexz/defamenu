@@ -2294,4 +2294,6 @@ Menu.ApplyTheme("Purple")
 -- Si deseas que el menú se abra automáticamente al inicio (para pruebas), descomenta la siguiente línea:
 -- Menu.Visible = true
 
+end  -- <-- este end cierra la última función o el hilo principal
+
 return Menu
