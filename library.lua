@@ -1,7 +1,7 @@
 -- ============================================================================
---  MENU PARA SUSANO - BASE + CONFIGURACIÓN PERSONAL
---  Basado en el diseño original, con banner personalizado.
---  Incluye el motor de UI (dibujo, input, keybinds) y las opciones.
+--  MENU COMPLETO PARA SUSANO
+--  Tecla para abrir: INSERT (código 0x2D)
+--  Banner: https://i.imgur.com/jnKfAh1.png
 -- ============================================================================
 
 local Menu = {}
@@ -50,7 +50,6 @@ Menu.BindingKeyName = nil
 
 Menu.ShowKeybinds = false
 
-
 Menu.CurrentTopTab = 1
 function Menu.UpdateCategoriesFromTopTab()
     if not Menu.TopLevelTabs then return end
@@ -77,7 +76,7 @@ end
 
 Menu.Banner = {
     enabled = true,
-    imageUrl = "https://i.imgur.com/jnKfAh1.png",  -- <-- NUEVO BANNER
+    imageUrl = "https://i.imgur.com/jnKfAh1.png",
     height = 100
 }
 
@@ -1756,7 +1755,7 @@ function Menu.HandleInput()
             end
         end
     end
-    local toggleKeyCode = Menu.SelectedKey or 0x31
+    local toggleKeyCode = Menu.SelectedKey or 0x2D  -- INSERT por defecto
     if Susano and Susano.GetAsyncKeyState then
         local down, pressed = Susano.GetAsyncKeyState(toggleKeyCode)
         local wasDown = Menu.KeyStates[toggleKeyCode] or false
@@ -2245,12 +2244,8 @@ end
 if Menu.Banner.enabled and Menu.Banner.imageUrl then Menu.LoadBannerTexture(Menu.Banner.imageUrl) end
 
 -- ============================================================================
---  A PARTIR DE AQUÍ VA TU CONFIGURACIÓN PERSONAL (CATEGORÍAS, OPCIONES, ACCIONES)
+--  CONFIGURACIÓN DE CATEGORÍAS Y OPCIONES (AJUSTA A TU GUSTO)
 -- ============================================================================
-
--- Ejemplo de estructura de menú. Aquí puedes ir añadiendo tus propias categorías y opciones.
--- Esta es una versión mínima para empezar. Si quieres mantener las opciones originales,
--- simplemente copia aquí el contenido de Menu.Categories que tenías en tu script principal.
 
 Menu.TopLevelTabs = {
     { name = "Menu", categories = {
@@ -2279,21 +2274,12 @@ Menu.TopLevelTabs = {
     } }
 }
 
--- Inicializar el menú con la primera pestaña
 Menu.UpdateCategoriesFromTopTab()
 
--- Por defecto, el menú no es visible hasta que presiones la tecla (Page Down)
-Menu.Visible = false
--- La tecla por defecto para abrir/cerrar (0x79 = Page Down)
-Menu.SelectedKey = 0x79
-Menu.SelectedKeyName = "Page Down"
+-- Tecla para abrir/cerrar: INSERT
+Menu.SelectedKey = 0x2D
+Menu.SelectedKeyName = "Insert"
 
--- Aplicar el tema por defecto (esto también cargará el banner)
 Menu.ApplyTheme("Purple")
-
--- Si deseas que el menú se abra automáticamente al inicio (para pruebas), descomenta la siguiente línea:
--- Menu.Visible = true
-
-end  -- <-- este end cierra la última función o el hilo principal
 
 return Menu
