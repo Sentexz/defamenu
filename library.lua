@@ -1,7 +1,6 @@
 -- ============================================================================
---  MENU COMPLETO PARA SUSANO
---  Tecla para abrir: INSERT (código 0x2D)
---  Banner: https://i.imgur.com/jnKfAh1.png
+--  MENU PARA SUSANO - VERSIÓN COMPLETA Y CORREGIDA
+--  Abre/cierra con la tecla INSERT (0x2D)
 -- ============================================================================
 
 local Menu = {}
@@ -1755,7 +1754,7 @@ function Menu.HandleInput()
             end
         end
     end
-    local toggleKeyCode = Menu.SelectedKey or 0x2D  -- INSERT por defecto
+    local toggleKeyCode = Menu.SelectedKey or 0x31
     if Susano and Susano.GetAsyncKeyState then
         local down, pressed = Susano.GetAsyncKeyState(toggleKeyCode)
         local wasDown = Menu.KeyStates[toggleKeyCode] or false
@@ -2244,7 +2243,8 @@ end
 if Menu.Banner.enabled and Menu.Banner.imageUrl then Menu.LoadBannerTexture(Menu.Banner.imageUrl) end
 
 -- ============================================================================
---  CONFIGURACIÓN DE CATEGORÍAS Y OPCIONES (AJUSTA A TU GUSTO)
+--  A PARTIR DE AQUÍ VA TU CONFIGURACIÓN PERSONAL (CATEGORÍAS, OPCIONES, ACCIONES)
+--  Esta es una versión mínima para empezar. Puedes ampliarla con tus propias opciones.
 -- ============================================================================
 
 Menu.TopLevelTabs = {
@@ -2274,12 +2274,19 @@ Menu.TopLevelTabs = {
     } }
 }
 
+-- Inicializar el menú con la primera pestaña
 Menu.UpdateCategoriesFromTopTab()
 
--- Tecla para abrir/cerrar: INSERT
+-- Por defecto, el menú no es visible hasta que presiones la tecla (INSERT)
+Menu.Visible = false
+-- La tecla por defecto para abrir/cerrar (0x2D = tecla INSERT)
 Menu.SelectedKey = 0x2D
 Menu.SelectedKeyName = "Insert"
 
+-- Aplicar el tema por defecto (esto también cargará el banner)
 Menu.ApplyTheme("Purple")
+
+-- Si deseas que el menú se abra automáticamente al inicio (para pruebas), descomenta la siguiente línea:
+Menu.Visible = true
 
 return Menu
