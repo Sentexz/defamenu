@@ -148,22 +148,22 @@ function Menu.ApplyTheme(themeName)
     elseif themeLower == "purple" then
         Menu.Colors.HeaderPink = { r = 148, g = 0, b = 211 }
         Menu.Colors.SelectedBg = { r = 148, g = 0, b = 211 }
-        Menu.Banner.imageUrl = "https://i.imgur.com/8wGWjBh.png"
+        Menu.Banner.imageUrl = "https://i.imgur.com/H5jBxTQ.png"
         Menu.CurrentTheme = "Purple"
     elseif themeLower == "gray" then
         Menu.Colors.HeaderPink = { r = 128, g = 128, b = 128 }
         Menu.Colors.SelectedBg = { r = 128, g = 128, b = 128 }
-        Menu.Banner.imageUrl = "https://i.imgur.com/iZnBhaR.jpeg"
+        Menu.Banner.imageUrl = "https://i.imgur.com/H5jBxTQ.png"
         Menu.CurrentTheme = "Gray"
     elseif themeLower == "pink" then
         Menu.Colors.HeaderPink = { r = 255, g = 20, b = 147 }
         Menu.Colors.SelectedBg = { r = 255, g = 20, b = 147 }
-        Menu.Banner.imageUrl = "https://i.imgur.com/BbABj2n.png"
+        Menu.Banner.imageUrl = "https://i.imgur.com/H5jBxTQ.png"
         Menu.CurrentTheme = "pink"
     else
         Menu.Colors.HeaderPink = { r = 148, g = 0, b = 211 }
         Menu.Colors.SelectedBg = { r = 148, g = 0, b = 211 }
-        Menu.Banner.imageUrl = "https://i.imgur.com/8wGWjBh.png"
+        Menu.Banner.imageUrl = "https://i.imgur.com/H5jBxTQ.png"
         Menu.CurrentTheme = "Purple"
     end
 
@@ -773,7 +773,7 @@ function Menu.DrawItem(x, itemY, width, itemHeight, item, isSelected)
             end
 
             local valueText
-            if item.name == "Freecam" then
+            if item.name == "Cámara libre" then
                 valueText = string.format("%.1f", currentValue)
             else
                 valueText = string.format("%.1f", currentValue)
@@ -936,7 +936,7 @@ function Menu.DrawItem(x, itemY, width, itemHeight, item, isSelected)
         local selectorSize = 17 * scale
 
         local isWardrobeSelector = false
-        local wardrobeItemNames = {"Hat", "Mask", "Glasses", "Torso", "Tshirt", "Pants", "Shoes"}
+        local wardrobeItemNames = {"Sombrero", "Máscara", "Gafas", "Torso", "Camiseta", "Pantalones", "Zapatos"}
         for _, name in ipairs(wardrobeItemNames) do
             if item.name == name then
                 isWardrobeSelector = true
@@ -1396,11 +1396,11 @@ function Menu.DrawLoadingBar(alpha)
 
     local loadingText = ""
     if elapsedTime < 1000 then
-        loadingText = "Injecting"
+        loadingText = "Inyectando"
     elseif elapsedTime < 2000 then
-        loadingText = "Have Fun !"
+        loadingText = "¡Disfruta!"
     else
-        loadingText = "Have Fun !"
+        loadingText = "¡Disfruta!"
     end
 
     if loadingText ~= "" then
@@ -1594,10 +1594,10 @@ function Menu.DrawKeySelector(alpha)
     local startX = math.floor((screenWidth - width) / 2)
     local startY = math.floor(screenHeight - 160)
 
-    local itemName = Menu.BindingItem and (Menu.BindingItem.name or "Option") or "Menu Toggle"
+    local itemName = Menu.BindingItem and (Menu.BindingItem.name or "Opción") or "Abrir menú"
     local keyName = Menu.BindingItem and Menu.BindingKeyName or Menu.SelectedKeyName
     if not keyName then keyName = "..." end
-    local status = "press a key"
+    local status = "presiona una tecla"
     local rowText = itemName .. " [" .. keyName .. "] - " .. status
 
     local totalHeight = headerHeight + barHeight + padding + lineHeight + padding
@@ -1613,7 +1613,7 @@ function Menu.DrawKeySelector(alpha)
         Menu.DrawRoundedRect(startX, startY, width, totalHeight, 0, 0, 0, math.floor(255 * bgAlpha), cornerRadius)
     end
 
-    local title = "KEYBIND"
+    local title = "TECLA RÁPIDA"
     local titleX = startX + padding
     local titleY = startY + padding - 2
     Menu.DrawText(titleX - 1, titleY - 1, title, textSize, 0.0, 0.0, 0.0, 1.0 * alpha)
@@ -1623,7 +1623,7 @@ function Menu.DrawKeySelector(alpha)
     Menu.DrawText(titleX, titleY, title, textSize, 1.0, 1.0, 1.0, 1.0 * alpha)
 
     local barY = startY + headerHeight
-    local barLabel = "Choose a key"
+    local barLabel = "Elige una tecla"
     local barLabelSize = 12
     local barLabelW = Susano and Susano.GetTextWidth and Susano.GetTextWidth(barLabel, barLabelSize) or (string.len(barLabel) * 7)
     local barLabelX = startX + (width / 2) - (barLabelW / 2)
@@ -1737,11 +1737,11 @@ function Menu.DrawKeybindsInterface(alpha)
 
     local textX = startX + padding
     local textY = startY + padding
-    Menu.DrawText(textX - 1, textY - 1, "keybind", textSize, 0.0, 0.0, 0.0, 1.0 * alpha)
-    Menu.DrawText(textX + 1, textY - 1, "keybind", textSize, 0.0, 0.0, 0.0, 1.0 * alpha)
-    Menu.DrawText(textX - 1, textY + 1, "keybind", textSize, 0.0, 0.0, 0.0, 1.0 * alpha)
-    Menu.DrawText(textX + 1, textY + 1, "keybind", textSize, 0.0, 0.0, 0.0, 1.0 * alpha)
-    Menu.DrawText(textX, textY, "keybind", textSize, 1.0, 1.0, 1.0, 1.0 * alpha)
+    Menu.DrawText(textX - 1, textY - 1, "tecla rápida", textSize, 0.0, 0.0, 0.0, 1.0 * alpha)
+    Menu.DrawText(textX + 1, textY - 1, "tecla rápida", textSize, 0.0, 0.0, 0.0, 1.0 * alpha)
+    Menu.DrawText(textX - 1, textY + 1, "tecla rápida", textSize, 0.0, 0.0, 0.0, 1.0 * alpha)
+    Menu.DrawText(textX + 1, textY + 1, "tecla rápida", textSize, 0.0, 0.0, 0.0, 1.0 * alpha)
+    Menu.DrawText(textX, textY, "tecla rápida", textSize, 1.0, 1.0, 1.0, 1.0 * alpha)
 
     local barY = startY + headerHeight
     if Susano and Susano.DrawRectFilled then
@@ -1969,11 +1969,11 @@ function Menu.DrawBackground()
                     local blackBackgroundItem = nil
                     if Menu.Categories then
                         for _, cat in ipairs(Menu.Categories) do
-                            if cat.name == "Settings" and cat.tabs then
+                            if cat.name == "Ajustes" and cat.tabs then
                                 for _, tab in ipairs(cat.tabs) do
                                     if tab.name == "General" and tab.items then
                                         for _, item in ipairs(tab.items) do
-                                            if item.name == "Black Background" then
+                                            if item.name == "Fondo negro" then
                                                 blackBackgroundItem = item
                                                 break
                                             end
@@ -2150,11 +2150,11 @@ end
 
 
 Menu.KeyNames = {
-    [0x08] = "Backspace", [0x09] = "Tab", [0x0D] = "Enter", [0x10] = "Shift",
-    [0x11] = "Ctrl", [0x12] = "Alt", [0x13] = "Pause", [0x14] = "Caps Lock",
-    [0x1B] = "ESC", [0x20] = "Space", [0x21] = "Page Up", [0x22] = "Page Down",
-    [0x23] = "End", [0x24] = "Home", [0x25] = "Left", [0x26] = "Up",
-    [0x27] = "Right", [0x28] = "Down", [0x2D] = "Insert", [0x2E] = "Delete",
+    [0x08] = "Retroceso", [0x09] = "Tabulador", [0x0D] = "Intro", [0x10] = "Mayús",
+    [0x11] = "Ctrl", [0x12] = "Alt", [0x13] = "Pausa", [0x14] = "Bloq Mayús",
+    [0x1B] = "ESC", [0x20] = "Espacio", [0x21] = "Re Pág", [0x22] = "Av Pág",
+    [0x23] = "Fin", [0x24] = "Inicio", [0x25] = "Izquierda", [0x26] = "Arriba",
+    [0x27] = "Derecha", [0x28] = "Abajo", [0x2D] = "Insert", [0x2E] = "Supr",
     [0x30] = "0", [0x31] = "1", [0x32] = "2", [0x33] = "3", [0x34] = "4",
     [0x35] = "5", [0x36] = "6", [0x37] = "7", [0x38] = "8", [0x39] = "9",
     [0x41] = "A", [0x42] = "B", [0x43] = "C", [0x44] = "D", [0x45] = "E",
@@ -2162,20 +2162,20 @@ Menu.KeyNames = {
     [0x4B] = "K", [0x4C] = "L", [0x4D] = "M", [0x4E] = "N", [0x4F] = "O",
     [0x50] = "P", [0x51] = "Q", [0x52] = "R", [0x53] = "S", [0x54] = "T",
     [0x55] = "U", [0x56] = "V", [0x57] = "W", [0x58] = "X", [0x59] = "Y",
-    [0x5A] = "Z", [0x60] = "Numpad 0", [0x61] = "Numpad 1", [0x62] = "Numpad 2",
-    [0x63] = "Numpad 3", [0x64] = "Numpad 4", [0x65] = "Numpad 5", [0x66] = "Numpad 6",
-    [0x67] = "Numpad 7", [0x68] = "Numpad 8", [0x69] = "Numpad 9",
-    [0x6A] = "Multiply", [0x6B] = "Add", [0x6D] = "Subtract", [0x6E] = "Decimal",
-    [0x6F] = "Divide", [0x70] = "F1", [0x71] = "F2", [0x72] = "F3", [0x73] = "F4",
+    [0x5A] = "Z", [0x60] = "0 num", [0x61] = "1 num", [0x62] = "2 num",
+    [0x63] = "3 num", [0x64] = "4 num", [0x65] = "5 num", [0x66] = "6 num",
+    [0x67] = "7 num", [0x68] = "8 num", [0x69] = "9 num",
+    [0x6A] = "Multiplicar", [0x6B] = "Sumar", [0x6D] = "Restar", [0x6E] = "Decimal",
+    [0x6F] = "Dividir", [0x70] = "F1", [0x71] = "F2", [0x72] = "F3", [0x73] = "F4",
     [0x74] = "F5", [0x75] = "F6", [0x76] = "F7", [0x77] = "F8", [0x78] = "F9",
     [0x79] = "F10", [0x7A] = "F11", [0x7B] = "F12",
-    [0x90] = "Num Lock", [0x91] = "Scroll Lock",
-    [0xA0] = "Left Shift", [0xA1] = "Right Shift", [0xA2] = "Left Ctrl",
-    [0xA3] = "Right Ctrl", [0xA4] = "Left Alt", [0xA5] = "Right Alt"
+    [0x90] = "Bloq Num", [0x91] = "Bloq Despl",
+    [0xA0] = "Mayús Izq", [0xA1] = "Mayús Der", [0xA2] = "Ctrl Izq",
+    [0xA3] = "Ctrl Der", [0xA4] = "Alt Izq", [0xA5] = "Alt Der"
 }
 
 function Menu.GetKeyName(keyCode)
-    return Menu.KeyNames[keyCode] or ("Key 0x" .. string.format("%02X", keyCode))
+    return Menu.KeyNames[keyCode] or ("Tecla 0x" .. string.format("%02X", keyCode))
 end
 
 function Menu.HandleInput()
@@ -2196,13 +2196,13 @@ function Menu.HandleInput()
             if Menu.BindingKey and Menu.BindingItem then
                 Menu.BindingItem.bindKey = Menu.BindingKey
                 Menu.BindingItem.bindKeyName = Menu.BindingKeyName
-                local itemName = Menu.BindingItem.name or "option"
+                local itemName = Menu.BindingItem.name or "opción"
                 local savedKeyName = Menu.BindingKeyName
                 Menu.SelectingBind = false
                 Menu.BindingItem = nil
                 Menu.BindingKey = nil
                 Menu.BindingKeyName = nil
-                print("Bind set for " .. itemName .. ": " .. tostring(savedKeyName))
+                print("Tecla asignada para " .. itemName .. ": " .. tostring(savedKeyName))
             end
             return
         end
@@ -2301,18 +2301,18 @@ function Menu.HandleInput()
                                     if (pressed == true) or (down == true and not wasDown) then
                                         if item.type == "toggle" then
                                             item.value = not item.value
-                                            if item.name == "Editor Mode" then
+                                            if item.name == "Modo editor" then
                                                 Menu.EditorMode = item.value
                                             end
                                             if item.onClick then
                                                 item.onClick(item.value)
                                             end
-                                            print("Toggled " .. (item.name or "option") .. " to " .. tostring(item.value))
+                                            print("Alternado " .. (item.name or "opción") .. " a " .. tostring(item.value))
                                         elseif item.type == "action" then
                                             if item.onClick then
                                                 item.onClick()
                                             end
-                                            print("Executed action: " .. (item.name or "option"))
+                                            print("Acción ejecutada: " .. (item.name or "opción"))
                                         end
                                     end
                                 end
@@ -2439,7 +2439,7 @@ function Menu.HandleInput()
                     Menu.EditorDragging = true
                     Menu.EditorDragOffsetX = mouseX - menuX
                     Menu.EditorDragOffsetY = mouseY - menuY
-                    print("Started dragging menu")
+                    print("Arrastrando menú")
                 end
                 
                 if Menu.EditorDragging then
@@ -2489,7 +2489,7 @@ function Menu.HandleInput()
                 end
                 if currentTab and currentTab.items then
                     for _, item in ipairs(currentTab.items) do
-                        if item.name == "Editor Mode" and item.type == "toggle" then
+                        if item.name == "Modo editor" and item.type == "toggle" then
                             item.value = not item.value
                             Menu.EditorMode = item.value
                             break
@@ -2634,9 +2634,9 @@ function Menu.HandleInput()
                                     step = selectedItem.step
                                 end
                                 selectedItem.value = math.max(selectedItem.min or 0.0, (selectedItem.value or selectedItem.min or 0.0) - step)
-                                if selectedItem.name == "Smooth Menu" then
+                                if selectedItem.name == "Menú suave" then
                                     Menu.SmoothFactor = selectedItem.value / 100.0
-                                elseif selectedItem.name == "Menu Size" then
+                                elseif selectedItem.name == "Tamaño del menú" then
                                     Menu.Scale = selectedItem.value / 100.0
                                 end
                                 if selectedItem.onClick then selectedItem.onClick(selectedItem.value) end
@@ -2656,7 +2656,7 @@ function Menu.HandleInput()
                                 local currentIndex = selectedItem.selected or 1
 
                                 local isWardrobeSelector = false
-                                local wardrobeItemNames = {"Hat", "Mask", "Glasses", "Torso", "Tshirt", "Pants", "Shoes"}
+                                local wardrobeItemNames = {"Sombrero", "Máscara", "Gafas", "Torso", "Camiseta", "Pantalones", "Zapatos"}
                                 for _, name in ipairs(wardrobeItemNames) do
                                     if selectedItem.name == name then
                                         isWardrobeSelector = true
@@ -2676,17 +2676,17 @@ function Menu.HandleInput()
                                 end
                                 selectedItem.selected = currentIndex
 
-                                if selectedItem.name == "Menu Theme" and selectedItem.options then
+                                if selectedItem.name == "Tema del menú" and selectedItem.options then
                                     local theme = selectedItem.options[currentIndex]
                                     Menu.ApplyTheme(theme)
-                                elseif selectedItem.name == "Gradient" and selectedItem.options then
+                                elseif selectedItem.name == "Gradiente" and selectedItem.options then
                                     local gradientVal = selectedItem.options[currentIndex]
                                     Menu.GradientType = tonumber(gradientVal) or 1
-                                elseif selectedItem.name == "Scroll Bar Position" and selectedItem.options then
+                                elseif selectedItem.name == "Posición barra de desplazamiento" and selectedItem.options then
                                     local pos = selectedItem.options[currentIndex]
-                                    if pos == "Left" then
+                                    if pos == "Izquierda" then
                                         Menu.ScrollbarPosition = 1
-                                    elseif pos == "Right" then
+                                    elseif pos == "Derecha" then
                                         Menu.ScrollbarPosition = 2
                                     end
                                 end
@@ -2704,9 +2704,9 @@ function Menu.HandleInput()
                                     step = selectedItem.step
                                 end
                                 selectedItem.value = math.min(selectedItem.max or 100.0, (selectedItem.value or selectedItem.min or 0.0) + step)
-                                if selectedItem.name == "Smooth Menu" then
+                                if selectedItem.name == "Menú suave" then
                                     Menu.SmoothFactor = selectedItem.value / 100.0
-                                elseif selectedItem.name == "Menu Size" then
+                                elseif selectedItem.name == "Tamaño del menú" then
                                     Menu.Scale = selectedItem.value / 100.0
                                 end
                                 if selectedItem.onClick then selectedItem.onClick(selectedItem.value) end
@@ -2726,7 +2726,7 @@ function Menu.HandleInput()
                                 local currentIndex = selectedItem.selected or 1
 
                                 local isWardrobeSelector = false
-                                local wardrobeItemNames = {"Hat", "Mask", "Glasses", "Torso", "Tshirt", "Pants", "Shoes"}
+                                local wardrobeItemNames = {"Sombrero", "Máscara", "Gafas", "Torso", "Camiseta", "Pantalones", "Zapatos"}
                                 for _, name in ipairs(wardrobeItemNames) do
                                     if selectedItem.name == name then
                                         isWardrobeSelector = true
@@ -2746,17 +2746,17 @@ function Menu.HandleInput()
                                 end
                                 selectedItem.selected = currentIndex
 
-                                if selectedItem.name == "Menu Theme" and selectedItem.options then
+                                if selectedItem.name == "Tema del menú" and selectedItem.options then
                                     local theme = selectedItem.options[currentIndex]
                                     Menu.ApplyTheme(theme)
-                                elseif selectedItem.name == "Gradient" and selectedItem.options then
+                                elseif selectedItem.name == "Gradiente" and selectedItem.options then
                                     local gradientVal = selectedItem.options[currentIndex]
                                     Menu.GradientType = tonumber(gradientVal) or 1
-                                elseif selectedItem.name == "Scroll Bar Position" and selectedItem.options then
+                                elseif selectedItem.name == "Posición barra de desplazamiento" and selectedItem.options then
                                     local pos = selectedItem.options[currentIndex]
-                                    if pos == "Left" then
+                                    if pos == "Izquierda" then
                                         Menu.ScrollbarPosition = 1
-                                    elseif pos == "Right" then
+                                    elseif pos == "Derecha" then
                                         Menu.ScrollbarPosition = 2
                                     end
                                 end
@@ -2772,20 +2772,20 @@ function Menu.HandleInput()
                 if item and not item.isSeparator then
                     if item.type == "toggle" or item.type == "toggle_selector" then
                         item.value = not item.value
-                        if item.name == "Show Menu Keybinds" then
+                        if item.name == "Mostrar teclas rápidas" then
                             Menu.ShowKeybinds = item.value
-                        elseif item.name == "Editor Mode" then
+                        elseif item.name == "Modo editor" then
                             Menu.EditorMode = item.value
-                        elseif item.name == "Flakes" then
+                        elseif item.name == "Copos de nieve" then
                             Menu.ShowSnowflakes = item.value
                         end
                         if item.onClick then item.onClick(item.value) end
                     elseif item.type == "action" then
-                        if item.name == "Change Menu Keybind" then
+                        if item.name == "Cambiar tecla de menú" then
                             Menu.SelectingKey = true
                             Menu.SelectedKey = Menu.SelectedKey
                             Menu.SelectedKeyName = Menu.SelectedKeyName
-                            print("Changing menu keybind...")
+                            print("Cambiando tecla del menú...")
                         end
                         if item.onClick then item.onClick() end
                     elseif item.type == "selector" then
@@ -2893,7 +2893,7 @@ end)
 function Menu.OpenInput(title, subtitle, callback)
     if type(subtitle) == "function" then
         callback = subtitle
-        subtitle = "Enter text below"
+        subtitle = "Escribe el texto abajo"
     end
     Menu.InputTitle = title
     Menu.InputSubtitle = subtitle
@@ -2941,7 +2941,7 @@ function Menu.DrawInputWindow()
         Menu.DrawRect(x, y, width, 2, math.floor(r*255), math.floor(g*255), math.floor(b*255), 255)
     end
     
-    local titleText = Menu.InputTitle or "Input"
+    local titleText = Menu.InputTitle or "Entrada"
     local titleSize = 20
     local titleWidth = 0
     if Susano and Susano.GetTextWidth then
@@ -2952,7 +2952,7 @@ function Menu.DrawInputWindow()
     local titleX = x + (width / 2) - (titleWidth / 2)
     Menu.DrawText(titleX, y + 15, titleText, titleSize, 1.0, 1.0, 1.0, 1.0)
     
-    local subText = Menu.InputSubtitle or "Enter text below:"
+    local subText = Menu.InputSubtitle or "Escribe el texto abajo:"
     Menu.DrawText(x + 20, y + 45, subText, 14, 0.7, 0.7, 0.7, 1.0)
     
     local boxW = width - 40
