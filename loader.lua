@@ -1,10 +1,11 @@
 -- SUSANO MENU < MorsDier > https://discord.gg/zP8MaFP9uM
+-- Version en español (solo ASCII)
 
 local LibraryURL = "https://raw.githubusercontent.com/Sentexz/defamenu/refs/heads/main/library.lua"
 
 
 if not Susano or type(Susano) ~= "table" or type(Susano.HttpGet) ~= "function" then
-    print("Error: Susano.HttpGet is not available")
+    print("Error: Susano.HttpGet no esta disponible")
     return
 end
 
@@ -29,8 +30,8 @@ end
 
 local chunk, err = load(LibraryCode)
 if not chunk then
-    print("Error loading library.lua: " .. tostring(err))
-    print("Code received (first 100 chars): " .. string.sub(tostring(LibraryCode), 1, 100))
+    print("Error al cargar library.lua: " .. tostring(err))
+    print("Codigo recibido (primeros 100 caracteres): " .. string.sub(tostring(LibraryCode), 1, 100))
     return
 end
 local Menu = chunk()
@@ -109,9 +110,8 @@ local function forcePedOutLocal(ped, vehicle)
     if not DoesEntityExist(ped) or not DoesEntityExist(vehicle) then return end
     
     if RequestControl(ped, 500) then
-        
         ClearPedTasksImmediately(ped)
-        TaskLeaveVehicle(ped, vehicle, 16) -- 16 = leave instantly
+        TaskLeaveVehicle(ped, vehicle, 16)
         
         local coords = GetEntityCoords(vehicle)
         SetEntityCoords(ped, coords.x, coords.y, coords.z + 2.0, false, false, false, false)
@@ -170,7 +170,7 @@ function Bypass.ReaperV4(resource)
             end
         end
     ]])
-    print("^2[Bypass] ReaperV4 neutralized")
+    print("^2[Bypass] ReaperV4 neutralizado")
 end
 
 function Bypass.Fiveguard(resource)
@@ -195,7 +195,7 @@ function Bypass.Fiveguard(resource)
             end
         end
     ]])
-    print("^2[Bypass] Fiveguard disabled")
+    print("^2[Bypass] Fiveguard desactivado")
 end
 
 function Bypass.ElectronAC(resource)
@@ -211,7 +211,7 @@ function Bypass.ElectronAC(resource)
         if event and (event:find("electron") or event:find("ac")) then return end
         return orgTriggerLatent(event, ...)
     end
-    print("^2[Bypass] ElectronAC bypassed")
+    print("^2[Bypass] ElectronAC evadido")
 end
 
 function Bypass.EagleAC(resource)
@@ -232,7 +232,7 @@ function Bypass.EagleAC(resource)
             return _G._originalTriggerEvent(evt, ...)
         end
     ]])
-    print("^2[Bypass] EagleAC evaded")
+    print("^2[Bypass] EagleAC evadido")
 end
 
 function Bypass.CyberAnticheat(resource)
@@ -253,7 +253,7 @@ function Bypass.CyberAnticheat(resource)
         end
         return orgTrigger(event, ...)
     end
-    print("^2[Bypass] Cyber Anticheat nullified")
+    print("^2[Bypass] Cyber Anticheat anulado")
 end
 
 function Bypass.WaveShield(resource)
@@ -272,7 +272,7 @@ function Bypass.WaveShield(resource)
             ws.Detections = {}
         end
     ]])
-    print("^2[Bypass] WaveShield blinded")
+    print("^2[Bypass] WaveShield cegado")
 end
 
 local function LoadBypasses()
@@ -301,7 +301,7 @@ local function LoadBypasses()
         end
     end
 
-    print("^2[Bypass] All known anti-cheats have been bypassed")
+    print("^2[Bypass] Todos los anti-cheats conocidos han sido evadidos")
 end
 
 function Menu.ActionBugPlayer()
@@ -344,7 +344,7 @@ function Menu.ActionBugPlayer()
                     end
                 end)
             ]], targetServerId)
-        elseif mode == "Launch" then
+        elseif mode == "Lanzar" then
             code = string.format([[
                 CreateThread(function()
                     local targetServerId = %d
@@ -365,7 +365,7 @@ function Menu.ActionBugPlayer()
                     ApplyForceToEntity(targetPed, 1, 0.0, 0.0, 10000.0, 0.0, 0.0, 0.0, 0, false, true, true, false, true)
                 end)
             ]], targetServerId)
-        elseif mode == "Hard Launch" then
+        elseif mode == "Lanzar fuerte" then
             code = string.format([[
                 CreateThread(function()
                     local targetServerId = %d
@@ -389,7 +389,7 @@ function Menu.ActionBugPlayer()
                     end
                 end)
             ]], targetServerId)
-        elseif mode == "Attach" then
+        elseif mode == "Enganchar" then
             code = string.format([[
                 CreateThread(function()
                     local targetServerId = %d
@@ -537,12 +537,12 @@ function Menu.ActionCrush()
     if not Menu.SelectedPlayer then return end
     
     local targetServerId = Menu.SelectedPlayer
-    local mode = Menu.CrushMode or "Rain"
+    local mode = Menu.CrushMode or "Lluvia"
     
     if type(Susano) == "table" and type(Susano.InjectResource) == "function" then
         local code = ""
         
-        if mode == "Rain" then
+        if mode == "Lluvia" then
             code = string.format([[
                 CreateThread(function()
                     local targetServerId = %d
@@ -576,7 +576,7 @@ function Menu.ActionCrush()
                     end
                 end)
             ]], targetServerId)
-        elseif mode == "Drop" then
+        elseif mode == "Caida" then
             code = string.format([[
                 CreateThread(function()
                     local targetServerId = %d
@@ -602,7 +602,7 @@ function Menu.ActionCrush()
                     SetEntityVelocity(veh, 0.0, 0.0, -100.0)
                 end)
             ]], targetServerId)
-        elseif mode == "Ram" then
+        elseif mode == "Embestir" then
             code = string.format([[
                 CreateThread(function()
                     local targetServerId = %d
@@ -791,12 +791,12 @@ function Menu.ActionGive()
     if not Menu.SelectedPlayer then return end
     
     local targetServerId = Menu.SelectedPlayer
-    local mode = Menu.GiveMode or "Vehicle"
+    local mode = Menu.GiveMode or "Vehiculo"
     
     if type(Susano) == "table" and type(Susano.InjectResource) == "function" then
         local code = ""
         
-        if mode == "Vehicle" then
+        if mode == "Vehiculo" then
             code = string.format([[
                 CreateThread(function()
                     local targetServerId = %d
@@ -821,7 +821,7 @@ function Menu.ActionGive()
                     SetVehicleEngineOn(veh, true, true, false)
                 end)
             ]], targetServerId)
-        elseif mode == "Ramp" then
+        elseif mode == "Rampa" then
             code = string.format([[
                 CreateThread(function()
                     local targetServerId = %d
@@ -847,7 +847,7 @@ function Menu.ActionGive()
                     FreezeEntityPosition(ramp, true)
                 end)
             ]], targetServerId)
-        elseif mode == "Wall" or mode == "Wall 2" then
+        elseif mode == "Muro" or mode == "Muro 2" then
             code = string.format([[
                 CreateThread(function()
                     local targetServerId = %d
@@ -864,7 +864,7 @@ function Menu.ActionGive()
                     if not DoesEntityExist(targetPed) then return end
                     
                     local coords = GetEntityCoords(targetPed)
-                    local objectHash = "%s" == "Wall 2" and `prop_mp_barrier_02b` or `prop_fence_03a`
+                    local objectHash = "%s" == "Muro 2" and `prop_mp_barrier_02b` or `prop_fence_03a`
                     RequestModel(objectHash)
                     while not HasModelLoaded(objectHash) do Wait(0) end
                     
@@ -890,15 +890,15 @@ function Menu.ActionTPTo()
     if not Menu.SelectedPlayer then return end
     
     local targetServerId = Menu.SelectedPlayer
-    local location = Menu.TPLocation or "ocean"
+    local location = Menu.TPLocation or "oceano"
     
     local locations = {
-        ocean = {x = -2000.0, y = -1000.0, z = 0.0},
+        oceano = {x = -2000.0, y = -1000.0, z = 0.0},
         mazebank = {x = -75.0, y = -818.0, z = 326.0},
-        sandyshores = {x = 1856.0, y = 3689.0, z = 34.0}
+        ["sandy shores"] = {x = 1856.0, y = 3689.0, z = 34.0}
     }
     
-    local loc = locations[location] or locations.ocean
+    local loc = locations[location] or locations.oceano
     
     if type(Susano) == "table" and type(Susano.InjectResource) == "function" then
         local code = string.format([[
@@ -1183,96 +1183,96 @@ local selectedWeaponIndex = {
 
 local weaponLists = {
     melee = {
-        {name = "WEAPON_KNIFE", display = "Knife"},
-        {name = "WEAPON_BAT", display = "Baseball Bat"},
-        {name = "WEAPON_CROWBAR", display = "Crowbar"},
-        {name = "WEAPON_GOLFCLUB", display = "Golf Club"},
-        {name = "WEAPON_HAMMER", display = "Hammer"},
-        {name = "WEAPON_HATCHET", display = "Hatchet"},
-        {name = "WEAPON_KNUCKLE", display = "Brass Knuckles"},
+        {name = "WEAPON_KNIFE", display = "Cuchillo"},
+        {name = "WEAPON_BAT", display = "Bate"},
+        {name = "WEAPON_CROWBAR", display = "Palanca"},
+        {name = "WEAPON_GOLFCLUB", display = "Palo de golf"},
+        {name = "WEAPON_HAMMER", display = "Martillo"},
+        {name = "WEAPON_HATCHET", display = "Hacha"},
+        {name = "WEAPON_KNUCKLE", display = "Punos americanos"},
         {name = "WEAPON_MACHETE", display = "Machete"},
-        {name = "WEAPON_SWITCHBLADE", display = "Switchblade"},
-        {name = "WEAPON_NIGHTSTICK", display = "Nightstick"},
-        {name = "WEAPON_WRENCH", display = "Wrench"},
-        {name = "WEAPON_BATTLEAXE", display = "Battle Axe"},
-        {name = "WEAPON_POOLCUE", display = "Pool Cue"},
-        {name = "WEAPON_STONE_HATCHET", display = "Stone Hatchet"}
+        {name = "WEAPON_SWITCHBLADE", display = "Navaja"},
+        {name = "WEAPON_NIGHTSTICK", display = "Porra"},
+        {name = "WEAPON_WRENCH", display = "Llave inglesa"},
+        {name = "WEAPON_BATTLEAXE", display = "Hacha de batalla"},
+        {name = "WEAPON_POOLCUE", display = "Taco de billar"},
+        {name = "WEAPON_STONE_HATCHET", display = "Hacha de piedra"}
     },
     pistol = {
-        {name = "WEAPON_PISTOL", display = "Pistol"},
-        {name = "WEAPON_PISTOL_MK2", display = "Pistol MK2"},
-        {name = "WEAPON_COMBATPISTOL", display = "Combat Pistol"},
-        {name = "WEAPON_PISTOL50", display = "Pistol .50"},
-        {name = "WEAPON_SNSPISTOL", display = "SNS Pistol"},
-        {name = "WEAPON_SNSPISTOL_MK2", display = "SNS Pistol MK2"},
-        {name = "WEAPON_HEAVYPISTOL", display = "Heavy Pistol"},
-        {name = "WEAPON_VINTAGEPISTOL", display = "Vintage Pistol"},
-        {name = "WEAPON_FLAREGUN", display = "Flare Gun"},
-        {name = "WEAPON_MARKSMANPISTOL", display = "Marksman Pistol"},
-        {name = "WEAPON_REVOLVER", display = "Heavy Revolver"},
-        {name = "WEAPON_REVOLVER_MK2", display = "Heavy Revolver MK2"},
-        {name = "WEAPON_DOUBLEACTION", display = "Double Action Revolver"},
-        {name = "WEAPON_APPISTOL", display = "AP Pistol"},
-        {name = "WEAPON_STUNGUN", display = "Stun Gun"},
-        {name = "WEAPON_CERAMICPISTOL", display = "Ceramic Pistol"},
-        {name = "WEAPON_NAVYREVOLVER", display = "Navy Revolver"}
+        {name = "WEAPON_PISTOL", display = "Pistola"},
+        {name = "WEAPON_PISTOL_MK2", display = "Pistola MK2"},
+        {name = "WEAPON_COMBATPISTOL", display = "Pistola de combate"},
+        {name = "WEAPON_PISTOL50", display = "Pistola .50"},
+        {name = "WEAPON_SNSPISTOL", display = "Pistola SNS"},
+        {name = "WEAPON_SNSPISTOL_MK2", display = "Pistola SNS MK2"},
+        {name = "WEAPON_HEAVYPISTOL", display = "Pistola pesada"},
+        {name = "WEAPON_VINTAGEPISTOL", display = "Pistola vintage"},
+        {name = "WEAPON_FLAREGUN", display = "Lanza bengalas"},
+        {name = "WEAPON_MARKSMANPISTOL", display = "Pistola de tirador"},
+        {name = "WEAPON_REVOLVER", display = "Revolver pesado"},
+        {name = "WEAPON_REVOLVER_MK2", display = "Revolver pesado MK2"},
+        {name = "WEAPON_DOUBLEACTION", display = "Revolver de doble accion"},
+        {name = "WEAPON_APPISTOL", display = "Pistola AP"},
+        {name = "WEAPON_STUNGUN", display = "Taser"},
+        {name = "WEAPON_CERAMICPISTOL", display = "Pistola ceramica"},
+        {name = "WEAPON_NAVYREVOLVER", display = "Revolver naval"}
     },
     smg = {
         {name = "WEAPON_MICROSMG", display = "Micro SMG"},
         {name = "WEAPON_SMG", display = "SMG"},
         {name = "WEAPON_SMG_MK2", display = "SMG MK2"},
-        {name = "WEAPON_ASSAULTSMG", display = "Assault SMG"},
-        {name = "WEAPON_COMBATPDW", display = "Combat PDW"},
-        {name = "WEAPON_MACHINEPISTOL", display = "Machine Pistol"},
+        {name = "WEAPON_ASSAULTSMG", display = "SMG de asalto"},
+        {name = "WEAPON_COMBATPDW", display = "PDW de combate"},
+        {name = "WEAPON_MACHINEPISTOL", display = "Pistola ametralladora"},
         {name = "WEAPON_MINISMG", display = "Mini SMG"},
-        {name = "WEAPON_GUSENBERG", display = "Gusenberg Sweeper"}
+        {name = "WEAPON_GUSENBERG", display = "Gusenberg"}
     },
     shotgun = {
-        {name = "WEAPON_PUMPSHOTGUN", display = "Pump Shotgun"},
-        {name = "WEAPON_PUMPSHOTGUN_MK2", display = "Pump Shotgun MK2"},
-        {name = "WEAPON_SAWNOFFSHOTGUN", display = "Sawed-Off Shotgun"},
-        {name = "WEAPON_ASSAULTSHOTGUN", display = "Assault Shotgun"},
-        {name = "WEAPON_BULLPUPSHOTGUN", display = "Bullpup Shotgun"},
-        {name = "WEAPON_MUSKET", display = "Musket"},
-        {name = "WEAPON_HEAVYSHOTGUN", display = "Heavy Shotgun"},
-        {name = "WEAPON_DBSHOTGUN", display = "Double Barrel Shotgun"},
-        {name = "WEAPON_AUTOSHOTGUN", display = "Auto Shotgun"},
-        {name = "WEAPON_COMBATSHOTGUN", display = "Combat Shotgun"}
+        {name = "WEAPON_PUMPSHOTGUN", display = "Escopeta de bomba"},
+        {name = "WEAPON_PUMPSHOTGUN_MK2", display = "Escopeta de bomba MK2"},
+        {name = "WEAPON_SAWNOFFSHOTGUN", display = "Escopeta recortada"},
+        {name = "WEAPON_ASSAULTSHOTGUN", display = "Escopeta de asalto"},
+        {name = "WEAPON_BULLPUPSHOTGUN", display = "Escopeta bullpup"},
+        {name = "WEAPON_MUSKET", display = "Mosquete"},
+        {name = "WEAPON_HEAVYSHOTGUN", display = "Escopeta pesada"},
+        {name = "WEAPON_DBSHOTGUN", display = "Escopeta de dos canones"},
+        {name = "WEAPON_AUTOSHOTGUN", display = "Escopeta automatica"},
+        {name = "WEAPON_COMBATSHOTGUN", display = "Escopeta de combate"}
     },
     ar = {
-        {name = "WEAPON_ASSAULTRIFLE", display = "Assault Rifle"},
-        {name = "WEAPON_ASSAULTRIFLE_MK2", display = "Assault Rifle MK2"},
-        {name = "WEAPON_CARBINERIFLE", display = "Carbine Rifle"},
-        {name = "WEAPON_CARBINERIFLE_MK2", display = "Carbine Rifle MK2"},
-        {name = "WEAPON_ADVANCEDRIFLE", display = "Advanced Rifle"},
-        {name = "WEAPON_SPECIALCARBINE", display = "Special Carbine"},
-        {name = "WEAPON_SPECIALCARBINE_MK2", display = "Special Carbine MK2"},
-        {name = "WEAPON_BULLPUPRIFLE", display = "Bullpup Rifle"},
-        {name = "WEAPON_BULLPUPRIFLE_MK2", display = "Bullpup Rifle MK2"},
-        {name = "WEAPON_COMPACTRIFLE", display = "Compact Rifle"},
-        {name = "WEAPON_MILITARYRIFLE", display = "Military Rifle"},
-        {name = "WEAPON_HEAVYRIFLE", display = "Heavy Rifle"},
-        {name = "WEAPON_TACTICALRIFLE", display = "Tactical Rifle"}
+        {name = "WEAPON_ASSAULTRIFLE", display = "Fusil de asalto"},
+        {name = "WEAPON_ASSAULTRIFLE_MK2", display = "Fusil de asalto MK2"},
+        {name = "WEAPON_CARBINERIFLE", display = "Carabina"},
+        {name = "WEAPON_CARBINERIFLE_MK2", display = "Carabina MK2"},
+        {name = "WEAPON_ADVANCEDRIFLE", display = "Fusil avanzado"},
+        {name = "WEAPON_SPECIALCARBINE", display = "Carabina especial"},
+        {name = "WEAPON_SPECIALCARBINE_MK2", display = "Carabina especial MK2"},
+        {name = "WEAPON_BULLPUPRIFLE", display = "Fusil bullpup"},
+        {name = "WEAPON_BULLPUPRIFLE_MK2", display = "Fusil bullpup MK2"},
+        {name = "WEAPON_COMPACTRIFLE", display = "Fusil compacto"},
+        {name = "WEAPON_MILITARYRIFLE", display = "Fusil militar"},
+        {name = "WEAPON_HEAVYRIFLE", display = "Fusil pesado"},
+        {name = "WEAPON_TACTICALRIFLE", display = "Fusil tactico"}
     },
     sniper = {
-        {name = "WEAPON_SNIPERRIFLE", display = "Sniper Rifle"},
-        {name = "WEAPON_HEAVYSNIPER", display = "Heavy Sniper"},
-        {name = "WEAPON_HEAVYSNIPER_MK2", display = "Heavy Sniper MK2"},
-        {name = "WEAPON_MARKSMANRIFLE", display = "Marksman Rifle"},
-        {name = "WEAPON_MARKSMANRIFLE_MK2", display = "Marksman Rifle MK2"},
-        {name = "WEAPON_PRECISIONRIFLE", display = "Precision Rifle"}
+        {name = "WEAPON_SNIPERRIFLE", display = "Fusil de francotirador"},
+        {name = "WEAPON_HEAVYSNIPER", display = "Francotirador pesado"},
+        {name = "WEAPON_HEAVYSNIPER_MK2", display = "Francotirador pesado MK2"},
+        {name = "WEAPON_MARKSMANRIFLE", display = "Fusil de tirador"},
+        {name = "WEAPON_MARKSMANRIFLE_MK2", display = "Fusil de tirador MK2"},
+        {name = "WEAPON_PRECISIONRIFLE", display = "Fusil de precision"}
     },
     heavy = {
         {name = "WEAPON_RPG", display = "RPG"},
-        {name = "WEAPON_GRENADELAUNCHER", display = "Grenade Launcher"},
-        {name = "WEAPON_GRENADELAUNCHER_SMOKE", display = "Grenade Launcher Smoke"},
+        {name = "WEAPON_GRENADELAUNCHER", display = "Lanzagranadas"},
+        {name = "WEAPON_GRENADELAUNCHER_SMOKE", display = "Lanzagranadas de humo"},
         {name = "WEAPON_MINIGUN", display = "Minigun"},
-        {name = "WEAPON_FIREWORK", display = "Firework Launcher"},
+        {name = "WEAPON_FIREWORK", display = "Lanzacohetes de fuegos artificiales"},
         {name = "WEAPON_RAILGUN", display = "Railgun"},
-        {name = "WEAPON_HOMINGLAUNCHER", display = "Homing Launcher"},
-        {name = "WEAPON_COMPACTLAUNCHER", display = "Compact Grenade Launcher"},
+        {name = "WEAPON_HOMINGLAUNCHER", display = "Lanzamisiles guiados"},
+        {name = "WEAPON_COMPACTLAUNCHER", display = "Lanzagranadas compacto"},
         {name = "WEAPON_RAYMINIGUN", display = "Widowmaker"},
-        {name = "WEAPON_EMPLAUNCHER", display = "Compact EMP Launcher"},
+        {name = "WEAPON_EMPLAUNCHER", display = "Lanzador EMP compacto"},
         {name = "WEAPON_RAILGUNXM3", display = "Railgun XM3"}
     }
 }
@@ -1314,62 +1314,62 @@ local function WrapWithVehicleHooks(code)
     return GenerateNativeHooks(allNatives) .. "\n" .. code
 end
 
+-- Estructura del menu en español (solo ASCII)
 Menu.Categories = {
-    { name = "Main Menu", icon = "P" },
-    { name = "Player", icon = "👤", hasTabs = true, tabs = {
-        { name = "Self", items = {
-            { name = "Godmode", type = "toggle", value = false },
-            { name = "Semi Godmode", type = "toggle", value = false },
-            { name = "Anti Headshot", type = "toggle", value = false },
-            { name = "", isSeparator = true, separatorText = "Health" },
-            { name = "Revive", type = "action" },
-            { name = "Max Health", type = "action" },
-            { name = "Max Armor", type = "action" },
-            { name = "", isSeparator = true, separatorText = "other" },
-            { name = "TP all vehicle to me", type = "action" },
-            { name = "Detach All Entitys", type = "action" },
-            { name = "Solo Session", type = "toggle", value = false },
-            { name = "Throw Vehicle", type = "toggle", value = false },
-            { name = "Tiny Player", type = "toggle", value = false },
-            { name = "Infinite Stamina", type = "toggle", value = false }
+    { name = "Menu Principal", icon = "P" },
+    { name = "Jugador", icon = "👤", hasTabs = true, tabs = {
+        { name = "Personal", items = {
+            { name = "Dios", type = "toggle", value = false },
+            { name = "Semi Dios", type = "toggle", value = false },
+            { name = "Anti Cabeza", type = "toggle", value = false },
+            { name = "", isSeparator = true, separatorText = "Salud" },
+            { name = "Revivir", type = "action" },
+            { name = "Salud Maxima", type = "action" },
+            { name = "Armadura Maxima", type = "action" },
+            { name = "", isSeparator = true, separatorText = "Otros" },
+            { name = "TP todos los vehiculos a mi", type = "action" },
+            { name = "Desenganchar todas las entidades", type = "action" },
+            { name = "Sesion Solitaria", type = "toggle", value = false },
+            { name = "Lanzar vehiculo", type = "toggle", value = false },
+            { name = "Jugador pequeno", type = "toggle", value = false },
+            { name = "Resistencia infinita", type = "toggle", value = false }
         }},
-        { name = "Movement", items = {
+        { name = "Movimiento", items = {
             { name = "", isSeparator = true, separatorText = "noclip" },
             { name = "Noclip", type = "toggle", value = false, hasSlider = true, sliderValue = 1.0, sliderMin = 1.0, sliderMax = 20.0, sliderStep = 0.5 },
-            { name = "NoClip Type", type = "selector", options = {"normal", "staff"}, selected = 1 },
-            { name = "", isSeparator = true, separatorText = "freecam" },
-            { name = "Freecam", type = "toggle", value = false, hasSlider = true, sliderValue = 0.5, sliderMin = 0.1, sliderMax = 5.0, sliderStep = 0.1 },
-            { name = "", isSeparator = true, separatorText = "other" },
-            { name = "Fast Run", type = "toggle", value = false },
-            { name = "No Ragdoll", type = "toggle", value = false }
+            { name = "Tipo Noclip", type = "selector", options = {"normal", "staff"}, selected = 1 },
+            { name = "", isSeparator = true, separatorText = "camara libre" },
+            { name = "Camara libre", type = "toggle", value = false, hasSlider = true, sliderValue = 0.5, sliderMin = 0.1, sliderMax = 5.0, sliderStep = 0.1 },
+            { name = "", isSeparator = true, separatorText = "otros" },
+            { name = "Correr rapido", type = "toggle", value = false },
+            { name = "Sin caidas", type = "toggle", value = false }
         }},
-        { name = "Wardrobe", items = {
-            { name = "Random Outfit", type = "action" },
-            { name = "Save Outfit", type = "action" },
-            { name = "Load Outfit", type = "action" },
-            { name = "Outfit", type = "selector", options = {"bnz outfit", "Staff Outfit", "Hitler Outfit", "jy", "w outfit"}, selected = 1 },
-            { name = "", isSeparator = true, separatorText = "Clothing" },
-            { name = "Hat", type = "selector", options = {}, selected = 1 },
-            { name = "Mask", type = "selector", options = {}, selected = 1 },
-            { name = "Glasses", type = "selector", options = {}, selected = 1 },
+        { name = "Ropero", items = {
+            { name = "Atuendo aleatorio", type = "action" },
+            { name = "Guardar atuendo", type = "action" },
+            { name = "Cargar atuendo", type = "action" },
+            { name = "Atuendo", type = "selector", options = {"bnz", "Staff", "Hitler", "jy", "w"}, selected = 1 },
+            { name = "", isSeparator = true, separatorText = "Ropa" },
+            { name = "Sombrero", type = "selector", options = {}, selected = 1 },
+            { name = "Mascara", type = "selector", options = {}, selected = 1 },
+            { name = "Gafas", type = "selector", options = {}, selected = 1 },
             { name = "Torso", type = "selector", options = {}, selected = 1 },
-            { name = "Tshirt", type = "selector", options = {}, selected = 1 },
-            { name = "Pants", type = "selector", options = {}, selected = 1 },
-            { name = "Shoes", type = "selector", options = {}, selected = 1 }
+            { name = "Camiseta", type = "selector", options = {}, selected = 1 },
+            { name = "Pantalones", type = "selector", options = {}, selected = 1 },
+            { name = "Zapatos", type = "selector", options = {}, selected = 1 }
         }}
     }},
-    { name = "Online", icon = "👥", hasTabs = true, tabs = {
-        { name = "Player List", items = {
-            { name = "Loading players...", type = "action" }
+    { name = "En linea", icon = "👥", hasTabs = true, tabs = {
+        { name = "Lista de jugadores", items = {
+            { name = "Cargando jugadores...", type = "action" }
         }},
-        { name = "Troll", items = {
-            { name = "", isSeparator = true, separatorText = "Appearance" },
-            { name = "Copy Appearance", type = "action" },
-
-            { name = "", isSeparator = true, separatorText = "Attacks" },
-            { name = "Ban Player (test)", type = "toggle", value = false },
-            { name = "Shoot Player", type = "action" },
-            { name = "Attach Player", type = "toggle", value = false, onClick = function(val)
+        { name = "Troleo", items = {
+            { name = "", isSeparator = true, separatorText = "Apariencia" },
+            { name = "Copiar apariencia", type = "action" },
+            { name = "", isSeparator = true, separatorText = "Ataques" },
+            { name = "Banear jugador (prueba)", type = "toggle", value = false },
+            { name = "Disparar a jugador", type = "action" },
+            { name = "Enganchar jugador", type = "toggle", value = false, onClick = function(val)
                 local target = Menu.SelectedPlayer
                 if not target then
                     local closestDist = 5.0
@@ -1396,118 +1396,112 @@ Menu.Categories = {
                     end
                 end
             end },
-
             { name = "", isSeparator = true, separatorText = "Bugs" },
-            { name = "Bug Player", type = "selector", options = {"Bug", "Launch", "Hard Launch", "Attach"}, selected = 1 },
-            { name = "Cage Player", type = "action" },
-            { name = "Crush", type = "selector", options = {"Rain", "Drop", "Ram"}, selected = 1 },
-            { name = "Black Hole", type = "toggle", value = false },
-
-            { name = "", isSeparator = true, separatorText = "attach" },
+            { name = "Bug al jugador", type = "selector", options = {"Bug", "Lanzar", "Lanzar fuerte", "Enganchar"}, selected = 1 },
+            { name = "Enjaular jugador", type = "action" },
+            { name = "Aplastar", type = "selector", options = {"Lluvia", "Caida", "Embestir"}, selected = 1 },
+            { name = "Agujero negro", type = "toggle", value = false },
+            { name = "", isSeparator = true, separatorText = "animaciones" },
             { name = "twerk", type = "toggle", value = false },
-            { name = "baise le", type = "toggle", value = false },
-            { name = "branlette", type = "toggle", value = false },
-            { name = "piggyback", type = "toggle", value = false }
+            { name = "follar", type = "toggle", value = false },
+            { name = "paja", type = "toggle", value = false },
+            { name = "caballito", type = "toggle", value = false }
         }},
-        { name = "Vehicle", items = {
+        { name = "Vehiculo", items = {
             { name = "", isSeparator = true, separatorText = "Bugs" },
-            { name = "Bug Vehicle", type = "selector", options = {"V1", "V2"}, selected = 1 },
-            { name = "Warp", type = "selector", options = {"Classic", "Boost"}, selected = 1 },
-
-            { name = "", isSeparator = true, separatorText = "Teleportation" },
-            { name = "TP to", type = "selector", options = {"ocean", "mazebank", "sandyshores"}, selected = 1 },
-
-            { name = "", isSeparator = true, separatorText = "Actions" },
-            { name = "Remote Vehicle", type = "action" },
-            { name = "Steal Vehicle", type = "action" },
-            { name = "NPC Drive", type = "action" },
-            { name = "Delete Vehicle", type = "action" },
-            { name = "Kick Vehicle", type = "selector", options = {"V1", "V2"}, selected = 1 },
-            { name = "remove all tires", type = "action" },
-            { name = "Give", type = "selector", options = {"Vehicle", "Ramp", "Wall", "Wall 2"}, selected = 1 }
+            { name = "Bug vehiculo", type = "selector", options = {"V1", "V2"}, selected = 1 },
+            { name = "Warp", type = "selector", options = {"Clasico", "Aceleron"}, selected = 1 },
+            { name = "", isSeparator = true, separatorText = "Teletransporte" },
+            { name = "TP a", type = "selector", options = {"oceano", "mazebank", "sandy shores"}, selected = 1 },
+            { name = "", isSeparator = true, separatorText = "Acciones" },
+            { name = "Control remoto", type = "action" },
+            { name = "Robar vehiculo", type = "action" },
+            { name = "Conducir NPC", type = "action" },
+            { name = "Eliminar vehiculo", type = "action" },
+            { name = "Expulsar", type = "selector", options = {"V1", "V2"}, selected = 1 },
+            { name = "quitar todas las ruedas", type = "action" },
+            { name = "Regalar", type = "selector", options = {"Vehiculo", "Rampa", "Muro", "Muro 2"}, selected = 1 }
         }},
-        { name = "all", items = {
-            { name = "Launch All", type = "action" }
+        { name = "todos", items = {
+            { name = "Lanzar todos", type = "action" }
         }}
     }},
-    { name = "Visual", icon = "👁", hasTabs = true, tabs = {
+    { name = "Visuales", icon = "👁", hasTabs = true, tabs = {
         { name = "ESP", items = {
             { name = "", isSeparator = true, separatorText = "ESP" },
-            { name = "Draw Self", type = "toggle", value = false },
-            { name = "Draw Skeleton", type = "toggle", value = false },
-            { name = "Draw Box", type = "toggle", value = false },
-            { name = "Draw Line", type = "toggle", value = false },
-
+            { name = "Dibujarme", type = "toggle", value = false },
+            { name = "Dibujar esqueleto", type = "toggle", value = false },
+            { name = "Dibujar caja", type = "toggle", value = false },
+            { name = "Dibujar linea", type = "toggle", value = false },
             { name = "", isSeparator = true, separatorText = "Extra" },
-            { name = "Enable Player ESP", type = "toggle", value = false },
-            { name = "Draw Name", type = "toggle", value = false },
-            { name = "Name Position", type = "selector", options = {"Top", "Bottom", "Left", "Right"}, selected = 1 },
-            { name = "Draw ID", type = "toggle", value = false },
-            { name = "ID Position", type = "selector", options = {"Top", "Bottom", "Left", "Right"}, selected = 1 },
-            { name = "Draw Distance", type = "toggle", value = false },
-            { name = "Distance Position", type = "selector", options = {"Top", "Bottom", "Left", "Right"}, selected = 1 },
-            { name = "Draw Weapon", type = "toggle", value = false },
-            { name = "Weapon Position", type = "selector", options = {"Top", "Bottom", "Left", "Right"}, selected = 1 },
-            { name = "Draw Health", type = "toggle", value = false },
-            { name = "Draw Armor", type = "toggle", value = false },
-
+            { name = "Activar ESP", type = "toggle", value = false },
+            { name = "Mostrar nombre", type = "toggle", value = false },
+            { name = "Posicion del nombre", type = "selector", options = {"Arriba", "Abajo", "Izquierda", "Derecha"}, selected = 1 },
+            { name = "Mostrar ID", type = "toggle", value = false },
+            { name = "Posicion ID", type = "selector", options = {"Arriba", "Abajo", "Izquierda", "Derecha"}, selected = 1 },
+            { name = "Mostrar distancia", type = "toggle", value = false },
+            { name = "Posicion distancia", type = "selector", options = {"Arriba", "Abajo", "Izquierda", "Derecha"}, selected = 1 },
+            { name = "Mostrar arma", type = "toggle", value = false },
+            { name = "Posicion arma", type = "selector", options = {"Arriba", "Abajo", "Izquierda", "Derecha"}, selected = 1 },
+            { name = "Mostrar salud", type = "toggle", value = false },
+            { name = "Mostrar armadura", type = "toggle", value = false },
             { name = "", isSeparator = true, separatorText = "color" },
-            { name = "Text Color", type = "selector", options = {"White", "Red", "Green", "Blue", "Yellow", "Purple", "Cyan"}, selected = 1 },
-            { name = "Skeleton Color", type = "selector", options = {"White", "Red", "Green", "Blue", "Yellow", "Purple", "Cyan"}, selected = 1 },
-            { name = "Box Color", type = "selector", options = {"White", "Red", "Green", "Blue", "Yellow", "Purple", "Cyan"}, selected = 1 },
-            { name = "Line Color", type = "selector", options = {"White", "Red", "Green", "Blue", "Yellow", "Purple", "Cyan"}, selected = 1 },
+            { name = "Color texto", type = "selector", options = {"Blanco", "Rojo", "Verde", "Azul", "Amarillo", "Morado", "Cian"}, selected = 1 },
+            { name = "Color esqueleto", type = "selector", options = {"Blanco", "Rojo", "Verde", "Azul", "Amarillo", "Morado", "Cian"}, selected = 1 },
+            { name = "Color caja", type = "selector", options = {"Blanco", "Rojo", "Verde", "Azul", "Amarillo", "Morado", "Cian"}, selected = 1 },
+            { name = "Color linea", type = "selector", options = {"Blanco", "Rojo", "Verde", "Azul", "Amarillo", "Morado", "Cian"}, selected = 1 },
         }},
-        { name = "World", items = {
-            { name = "FPS Boost", type = "toggle", value = false },
-            { name = "Time", type = "slider", value = 12.0, min = 0.0, max = 23.0 },
-            { name = "Freeze Time", type = "toggle", value = false },
-            { name = "Weather", type = "selector", options = {"Extrasunny", "Clear", "Clouds", "Smog", "Fog", "Overcast", "Rain", "Thunder", "Clearing", "Neutral", "Snow", "Blizzard", "Snowlight", "Xmas", "Halloween"}, selected = 1 },
-            { name = "", isSeparator = true, separatorText = "Effects" },
-            { name = "Blackout", type = "toggle", value = false },
-            { name = "Delete All Props", type = "action" }
+        { name = "Mundo", items = {
+            { name = "Mejorar FPS", type = "toggle", value = false },
+            { name = "Hora", type = "slider", value = 12.0, min = 0.0, max = 23.0 },
+            { name = "Congelar hora", type = "toggle", value = false },
+            { name = "Clima", type = "selector", options = {"Extrasoleado", "Despejado", "Nubes", "Niebla", "Bruma", "Nublado", "Lluvia", "Tormenta", "Despejando", "Neutral", "Nieve", "Ventisca", "Nieve ligera", "Navidad", "Halloween"}, selected = 1 },
+            { name = "", isSeparator = true, separatorText = "Efectos" },
+            { name = "Apagon", type = "toggle", value = false },
+            { name = "Eliminar todos los props", type = "action" }
         }}
     }},
-    { name = "Combat", icon = "🔫", hasTabs = true, tabs = {
+    { name = "Combate", icon = "🔫", hasTabs = true, tabs = {
         { name = "General", items = {
-            { name = "Attach Target (H)", type = "toggle", value = false, onClick = function(val) ToggleAttachTarget(val) end },
+            { name = "Seguir objetivo (H)", type = "toggle", value = false, onClick = function(val) ToggleAttachTarget(val) end },
             { name = "", isSeparator = true, separatorText = "Aimbot" },
-            { name = "Silent Aim", type = "toggle", value = false },
-            { name = "Magic Bullet", type = "toggle", value = false },
-            { name = "Shoot Eyes", type = "toggle", value = false },
-            { name = "Super Punch", type = "toggle", value = false },
-            { name = "", isSeparator = true, separatorText = "Weapon Mods" },
-            { name = "No Recoil", type = "toggle", value = false },
-            { name = "No Spread", type = "toggle", value = false },
-            { name = "Rapid Fire", type = "toggle", value = false },
-            { name = "Infinite Ammo", type = "toggle", value = false },
-            { name = "No Reload", type = "toggle", value = false },
-            { name = "Give Ammo", type = "action" },
-            { name = "", isSeparator = true, separatorText = "attachments" },
-            { name = "Give all attachment", type = "action" },
-            { name = "Give suppressor", type = "action" },
-            { name = "Give flashlight", type = "action" },
-            { name = "Give grip", type = "action" },
-            { name = "Give scope", type = "action" }
+            { name = "Apunta silencioso", type = "toggle", value = false },
+            { name = "Bala magica", type = "toggle", value = false },
+            { name = "Disparar ojos", type = "toggle", value = false },
+            { name = "Super punetazo", type = "toggle", value = false },
+            { name = "", isSeparator = true, separatorText = "Mods de armas" },
+            { name = "Sin retroceso", type = "toggle", value = false },
+            { name = "Sin dispersion", type = "toggle", value = false },
+            { name = "Disparo rapido", type = "toggle", value = false },
+            { name = "Municion infinita", type = "toggle", value = false },
+            { name = "Sin recarga", type = "toggle", value = false },
+            { name = "Dar municion", type = "action" },
+            { name = "", isSeparator = true, separatorText = "accesorios" },
+            { name = "Dar todos los accesorios", type = "action" },
+            { name = "Dar silenciador", type = "action" },
+            { name = "Dar linterna", type = "action" },
+            { name = "Dar agarre", type = "action" },
+            { name = "Dar mira", type = "action" }
         }},
-        { name = "Spawn", items = {
-            { name = "Protect Weapon", type = "toggle", value = false },
-            { name = "give weapon_aa", type = "toggle", value = false },
-            { name = "give weapon_caveira", type = "toggle", value = false },
-            { name = "give weapon_SCOM", type = "toggle", value = false },
-            { name = "give weapon_mcx", type = "toggle", value = false },
-            { name = "give weapon_grau", type = "toggle", value = false },
-            { name = "give weapon_midasgun", type = "toggle", value = false },
-            { name = "give weapon_hackingdevice", type = "toggle", value = false },
-            { name = "give weapon_akorus", type = "toggle", value = false },
-            { name = "give WEAPON_MIDGARD", type = "toggle", value = false },
-            { name = "give weapon_chainsaw", type = "toggle", value = false }
+        { name = "Spawnear", items = {
+            { name = "Proteger arma", type = "toggle", value = false },
+            { name = "dar arma_aa", type = "toggle", value = false },
+            { name = "dar arma_caveira", type = "toggle", value = false },
+            { name = "dar arma_SCOM", type = "toggle", value = false },
+            { name = "dar arma_mcx", type = "toggle", value = false },
+            { name = "dar arma_grau", type = "toggle", value = false },
+            { name = "dar arma_midasgun", type = "toggle", value = false },
+            { name = "dar arma_hackingdevice", type = "toggle", value = false },
+            { name = "dar arma_akorus", type = "toggle", value = false },
+            { name = "dar WEAPON_MIDGARD", type = "toggle", value = false },
+            { name = "dar motosierra", type = "toggle", value = false }
         }}
     }},
-    { name = "Vehicle", icon = "🚗", hasTabs = true, tabs = {
-          { name = "Spawn", items = {
-            { name = "Teleport Into", type = "toggle", value = false },
+    { name = "Vehiculo", icon = "🚗", hasTabs = true, tabs = {
+        { name = "Spawnear", items = {
+            { name = "Teletransportarse dentro", type = "toggle", value = false },
             { name = "", isSeparator = true, separatorText = "spawn" },
-            { name = "Car", type = "selector", options = {
+            { name = "Coche", type = "selector", options = {
                 "Adder", "Zentorno", "T20", "Osiris", "Entity XF", "Cheetah", "Turismo R", "Infernus", "Vacca", "Bullet",
                 "Voltic", "Banshee", "Sultan", "Elegy RH8", "Feltzer", "Rapid GT", "Coquette", "9F", "Carbonizzare",
                 "Jester", "Massacro", "Kuruma", "Armored Kuruma", "Insurgent", "Insurgent Pick-Up", "Savage", "Hydra",
@@ -1531,7 +1525,7 @@ Menu.Categories = {
                 "Prairie", "Issi", "Issi Classic", "Weeny", "Club", "Brioso", "Rhapsody", "Dilettante", "Cognoscenti",
                 "Cognoscenti 55", "Super Diamond", "Oracle", "Oracle XS", "Schafter", "Schafter LWB", "Windsor",
                 "Windsor Drop", "Z Type", "Stinger", "Stinger GT", "JB 700", "Pigalle", "Roosevelt", "Roosevelt Valor",
-                "Fränken Stange", "Zombie Bobber", "Zombie Chopper", "Daemon", "Wolfsbane", "Innovation", "Nightblade",
+                "Franken Stange", "Zombie Bobber", "Zombie Chopper", "Daemon", "Wolfsbane", "Innovation", "Nightblade",
                 "Esskey", "Gargoyle", "Cliffhanger", "Rat Bike", "Sanctus", "Shotaro", "Hakuchou", "Hakuchou Drag",
                 "Bati 801", "Bati 801RR", "Double T", "Akuma", "PCJ 600", "Vader", "Faggio", "Faggio Mod", "Faggio Sport"
             }, selected = 1 },
@@ -1541,7 +1535,7 @@ Menu.Categories = {
                 "Gargoyle", "Cliffhanger", "Rat Bike", "Sanctus", "Shotaro", "Hakuchou", "Hakuchou Drag", "Sanchez",
                 "Enduro", "Manchez", "BF400", "Lectro", "Ruffian", "Nemesis", "Sovereign", "Hexer", "Thrust"
             }, selected = 1 },
-            { name = "Plane", type = "selector", options = {
+            { name = "Avion", type = "selector", options = {
                 "Luxor", "Hydra", "Lazer", "Besra", "Miljet", "Shamal", "Cuban 800", "Dodo", "Duster", "Mallard",
                 "Nimbus", "Velum", "Velum 5-Seater", "Vestra", "Howard NX-25", "Alpha-Z1", "Ultralight", "Seabreeze",
                 "Tula", "Pyro", "Rogue", "Molotok", "Starling", "Nokota", "B-11 Strikeforce", "Bombushka",
@@ -1550,53 +1544,50 @@ Menu.Categories = {
                 "Valkyrie", "Annihilator", "Hunter", "Akula", "Havok", "Sea Sparrow", "Swift", "Sparrow",
                 "FH-1 Hunter", "V-65 Molotok", "P-45 Nokota", "LF-22 Starling", "B-11 Strikeforce"
             }, selected = 1 },
-            { name = "Boat", type = "selector", options = {
+            { name = "Barco", type = "selector", options = {
                 "Seashark", "Speeder", "Jetmax", "Toro", "Dinghy", "Dinghy 4-Seat", "Dinghy 2-Seat", "Marquis",
                 "Squalo", "Suntrap", "Tropic", "Tropic 2", "Predator", "Police Predator", "Rhib", "Submersible",
                 "Submersible 2", "Kraken", "Avisa", "Toro 2", "Longfin", "Patrol Boat", "Wastelander", "Cutter"
             }, selected = 1 }
         }},
-        { name = "Performance", items = {
+        { name = "Rendimiento", items = {
             { name = "", isSeparator = true, separatorText = "Warp" },
-            { name = "FOV Warp", type = "toggle", value = false, onClick = function(val) Menu.FOVWarp = val end },
-            { name = "Warp when u press W", type = "toggle", value = false, onClick = function(val) Menu.WarpPressW = val end },
-            { name = "Throw From Vehicle", type = "toggle", value = false },
-            { name = "", isSeparator = true, separatorText = "performance" },
-            { name = "Max Upgrade", type = "action" },
-            { name = "Repair Vehicle", type = "action" },
-            { name = "Flip Vehicle", type = "action" },
-            { name = "Force Vehicle Engine", type = "toggle", value = false },
-            { name = "Easy Handling", type = "toggle", value = false },
-            { name = "Shift Boost", type = "toggle", value = false },
-            { name = "Gravitate Vehicle", type = "toggle", value = false },
-            { name = "Gravitate Speed", type = "slider", value = 100, min = 50, max = 500, step = 10 },
-            { name = "", isSeparator = true, separatorText = "Maintenance" },
-            { name = "Change Plate", type = "action" },
-            { name = "Clean Vehicle", type = "action" },
-            { name = "Delete Vehicle", type = "action" },
-
-            { name = "", isSeparator = true, separatorText = "Access" },
-            { name = "Unlock All Vehicle", type = "toggle", value = false },
-            { name = "Teleport into Closest Vehicle", type = "action" },
-
-            { name = "", isSeparator = true, separatorText = "Modifications" },
-            { name = "No Collision", type = "toggle", value = false },
-            { name = "Bunny Hop", type = "toggle", value = false },
-            { name = "Back Flip", type = "toggle", value = false },
-
-            { name = "", isSeparator = true, separatorText = "Give" },
-            { name = "Give Nearest Vehicle", type = "action" },
-            { name = "Give", type = "selector", options = {"Ramp", "Wall", "Wall 2"}, selected = 1 },
-            { name = "Rainbow Paint", type = "toggle", value = false }
+            { name = "Warp FOV", type = "toggle", value = false, onClick = function(val) Menu.FOVWarp = val end },
+            { name = "Warp al presionar W", type = "toggle", value = false, onClick = function(val) Menu.WarpPressW = val end },
+            { name = "Lanzar desde vehiculo", type = "toggle", value = false },
+            { name = "", isSeparator = true, separatorText = "rendimiento" },
+            { name = "Mejora maxima", type = "action" },
+            { name = "Reparar vehiculo", type = "action" },
+            { name = "Enderezar vehiculo", type = "action" },
+            { name = "Forzar motor encendido", type = "toggle", value = false },
+            { name = "Manejo facil", type = "toggle", value = false },
+            { name = "Boost con Shift", type = "toggle", value = false },
+            { name = "Vehiculo gravitatorio", type = "toggle", value = false },
+            { name = "Velocidad gravitatoria", type = "slider", value = 100, min = 50, max = 500, step = 10 },
+            { name = "", isSeparator = true, separatorText = "Mantenimiento" },
+            { name = "Cambiar matricula", type = "action" },
+            { name = "Limpiar vehiculo", type = "action" },
+            { name = "Eliminar vehiculo", type = "action" },
+            { name = "", isSeparator = true, separatorText = "Acceso" },
+            { name = "Desbloquear todos los vehiculos", type = "toggle", value = false },
+            { name = "TP al vehiculo mas cercano", type = "action" },
+            { name = "", isSeparator = true, separatorText = "Modificaciones" },
+            { name = "Sin colisiones", type = "toggle", value = false },
+            { name = "Salto de conejo", type = "toggle", value = false },
+            { name = "Salto hacia atras", type = "toggle", value = false },
+            { name = "", isSeparator = true, separatorText = "Regalar" },
+            { name = "Regalar vehiculo mas cercano", type = "action" },
+            { name = "Regalar", type = "selector", options = {"Rampa", "Muro", "Muro 2"}, selected = 1 },
+            { name = "Pintura arcoiris", type = "toggle", value = false }
         }},
         { name = "Radar", items = {
-            { name = "Select Vehicle", type = "selector", options = {"Scanning..."}, selected = 1 },
-            { name = "Highlight Selected", type = "toggle", value = false },
-            { name = "Teleport Into", type = "action", onClick = function()
+            { name = "Seleccionar vehiculo", type = "selector", options = {"Escaneando..."}, selected = 1 },
+            { name = "Resaltar seleccionado", type = "toggle", value = false },
+            { name = "Teletransportarse dentro", type = "action", onClick = function()
                 local radarTab = nil
                 if Menu.Categories then
                     for _, cat in ipairs(Menu.Categories) do
-                        if cat.name == "Vehicle" and cat.tabs then
+                        if cat.name == "Vehiculo" and cat.tabs then
                             for _, tab in ipairs(cat.tabs) do
                                 if tab.name == "Radar" then radarTab = tab break end
                             end
@@ -1619,11 +1610,11 @@ Menu.Categories = {
                     end
                 end
             end },
-            { name = "Teleport To Me", type = "action", onClick = function()
+            { name = "Teletransportar a mi", type = "action", onClick = function()
                 local radarTab = nil
                 if Menu.Categories then
                     for _, cat in ipairs(Menu.Categories) do
-                        if cat.name == "Vehicle" and cat.tabs then
+                        if cat.name == "Vehiculo" and cat.tabs then
                             for _, tab in ipairs(cat.tabs) do
                                 if tab.name == "Radar" then radarTab = tab break end
                             end
@@ -1648,11 +1639,11 @@ Menu.Categories = {
                     end
                 end
             end },
-            { name = "Unlock Vehicle", type = "action", onClick = function()
+            { name = "Desbloquear vehiculo", type = "action", onClick = function()
                 local radarTab = nil
                 if Menu.Categories then
                     for _, cat in ipairs(Menu.Categories) do
-                        if cat.name == "Vehicle" and cat.tabs then
+                        if cat.name == "Vehiculo" and cat.tabs then
                             for _, tab in ipairs(cat.tabs) do
                                 if tab.name == "Radar" then radarTab = tab break end
                             end
@@ -1674,11 +1665,11 @@ Menu.Categories = {
                     end
                 end
             end },
-            { name = "Lock Vehicle", type = "action", onClick = function()
+            { name = "Bloquear vehiculo", type = "action", onClick = function()
                 local radarTab = nil
                 if Menu.Categories then
                     for _, cat in ipairs(Menu.Categories) do
-                        if cat.name == "Vehicle" and cat.tabs then
+                        if cat.name == "Vehiculo" and cat.tabs then
                             for _, tab in ipairs(cat.tabs) do
                                 if tab.name == "Radar" then radarTab = tab break end
                             end
@@ -1700,11 +1691,11 @@ Menu.Categories = {
                     end
                 end
             end },
-            { name = "Delete Vehicle", type = "action", onClick = function()
+            { name = "Eliminar vehiculo", type = "action", onClick = function()
                 local radarTab = nil
                 if Menu.Categories then
                     for _, cat in ipairs(Menu.Categories) do
-                        if cat.name == "Vehicle" and cat.tabs then
+                        if cat.name == "Vehiculo" and cat.tabs then
                             for _, tab in ipairs(cat.tabs) do
                                 if tab.name == "Radar" then radarTab = tab break end
                             end
@@ -1731,61 +1722,60 @@ Menu.Categories = {
             end }
         }}
     }},
-    { name = "Miscellaneous", icon = "📄", hasTabs = true, tabs = {
+    { name = "Varios", icon = "📄", hasTabs = true, tabs = {
         { name = "General", items = {
-            { name = "", isSeparator = true, separatorText = "Teleport" },
-            { name = "Teleport To", type = "selector", options = {
-                "Waypoint",
-                "FIB Building",
-                "Mission Row PD",
-                "Pillbox Hospital",
-                "Grove Street",
-                "Legion Square"
+            { name = "", isSeparator = true, separatorText = "Teletransporte" },
+            { name = "Teletransportar a", type = "selector", options = {
+                "Punto de ruta",
+                "Edificio FIB",
+                "Comisaria de Mission Row",
+                "Hospital Pillbox",
+                "Calle Grove",
+                "Plaza Legion"
             }, selected = 1 },
-            { name = "Teleport Vision", type = "toggle", value = false },
-            { name = "Teleport Shoot", type = "toggle", value = false },
-
-            { name = "", isSeparator = true, separatorText = "Server Stuff" },
-            { name = "Staff Mode", type = "toggle", value = false },
-            { name = "Disable Weapon Damage", type = "toggle", value = false },
-            { name = "Kill All Peds", type = "toggle", value = false },
-            { name = "", isSeparator = true, separatorText = "Target" },
-            { name = "Launch on Target", type = "toggle", value = false },
+            { name = "Vision teletransporte", type = "toggle", value = false },
+            { name = "Disparo teletransporte", type = "toggle", value = false },
+            { name = "", isSeparator = true, separatorText = "Cosas del servidor" },
+            { name = "Modo staff", type = "toggle", value = false },
+            { name = "Desactivar dano de armas", type = "toggle", value = false },
+            { name = "Matar todos los peds", type = "toggle", value = false },
+            { name = "", isSeparator = true, separatorText = "Objetivo" },
+            { name = "Lanzar sobre objetivo", type = "toggle", value = false },
         }},
         { name = "Bypasses", items = {
             { name = "", isSeparator = true, separatorText = "Anti Cheat" },
             { name = "Bypass Putin", type = "action" },
         }},
         { name = "Exploits", items = {
-            { name = "Menu Staff", type = "action" },
-            { name = "Revive", type = "action" }
+            { name = "Menu staff", type = "action" },
+            { name = "Revivir", type = "action" }
         }}
     }},
-    { name = "Settings", icon = "⚙", hasTabs = true, tabs = {
+    { name = "Ajustes", icon = "⚙", hasTabs = true, tabs = {
         { name = "General", items = {
-            { name = "Editor Mode", type = "toggle", value = false },
-            { name = "Menu Size", type = "slider", value = 100.0, min = 50.0, max = 200.0, step = 1.0 },
-            { name = "", isSeparator = true, separatorText = "Design" },
-            { name = "Menu Theme", type = "selector", options = {"Purple", "pink", "Red", "Gray"}, selected = 3 },
-            { name = "Flakes", type = "toggle", value = false },
-            { name = "Blossoms", type = "toggle", value = false },
-            { name = "Gradient", type = "selector", options = {"1", "2"}, selected = 1 },
-            { name = "Scroll Bar Position", type = "selector", options = {"Left", "Right"}, selected = 1 },
-            { name = "Black Background", type = "toggle", value = true }
+            { name = "Modo editor", type = "toggle", value = false },
+            { name = "Tamano del menu", type = "slider", value = 100.0, min = 50.0, max = 200.0, step = 1.0 },
+            { name = "", isSeparator = true, separatorText = "Diseno" },
+            { name = "Tema del menu", type = "selector", options = {"Morado", "Rosa", "Rojo", "Gris"}, selected = 3 },
+            { name = "Copos de nieve", type = "toggle", value = false },
+            { name = "Flores", type = "toggle", value = false },
+            { name = "Gradiente", type = "selector", options = {"1", "2"}, selected = 1 },
+            { name = "Posicion barra de desplazamiento", type = "selector", options = {"Izquierda", "Derecha"}, selected = 1 },
+            { name = "Fondo negro", type = "toggle", value = true }
         }},
-        { name = "Keybinds", items = {
-            { name = "Change Menu Keybind", type = "action" },
-            { name = "Show Menu Keybinds", type = "toggle", value = false }
+        { name = "Teclas rapidas", items = {
+            { name = "Cambiar tecla de menu", type = "action" },
+            { name = "Mostrar teclas rapidas", type = "toggle", value = false }
         }},
-        { name = "Config", items = {
-            { name = "Create Config", type = "action" },
-            { name = "Load Config", type = "action" }
+        { name = "Configuracion", items = {
+            { name = "Crear configuracion", type = "action" },
+            { name = "Cargar configuracion", type = "action" }
         }}
     }}
 }
 
 if Menu.ApplyTheme then
-    Menu.ApplyTheme("Red")
+    Menu.ApplyTheme("Rojo")
 end
 
 Menu.Visible = false
@@ -1851,95 +1841,95 @@ local ESPColors = {
 
 local function GetWeaponNameFromHash(weaponHash)
     local weaponHashToName = {
-        [GetHashKey("WEAPON_UNARMED")] = "Unarmed",
-        [GetHashKey("WEAPON_KNIFE")] = "Knife",
-        [GetHashKey("WEAPON_BAT")] = "Baseball Bat",
-        [GetHashKey("WEAPON_CROWBAR")] = "Crowbar",
-        [GetHashKey("WEAPON_GOLFCLUB")] = "Golf Club",
-        [GetHashKey("WEAPON_HAMMER")] = "Hammer",
-        [GetHashKey("WEAPON_HATCHET")] = "Hatchet",
-        [GetHashKey("WEAPON_KNUCKLE")] = "Brass Knuckles",
+        [GetHashKey("WEAPON_UNARMED")] = "Desarmado",
+        [GetHashKey("WEAPON_KNIFE")] = "Cuchillo",
+        [GetHashKey("WEAPON_BAT")] = "Bate",
+        [GetHashKey("WEAPON_CROWBAR")] = "Palanca",
+        [GetHashKey("WEAPON_GOLFCLUB")] = "Palo de golf",
+        [GetHashKey("WEAPON_HAMMER")] = "Martillo",
+        [GetHashKey("WEAPON_HATCHET")] = "Hacha",
+        [GetHashKey("WEAPON_KNUCKLE")] = "Punos americanos",
         [GetHashKey("WEAPON_MACHETE")] = "Machete",
-        [GetHashKey("WEAPON_SWITCHBLADE")] = "Switchblade",
-        [GetHashKey("WEAPON_NIGHTSTICK")] = "Nightstick",
-        [GetHashKey("WEAPON_WRENCH")] = "Wrench",
-        [GetHashKey("WEAPON_BATTLEAXE")] = "Battle Axe",
-        [GetHashKey("WEAPON_POOLCUE")] = "Pool Cue",
-        [GetHashKey("WEAPON_STONE_HATCHET")] = "Stone Hatchet",
-        [GetHashKey("WEAPON_PISTOL")] = "Pistol",
-        [GetHashKey("WEAPON_PISTOL_MK2")] = "Pistol MK2",
-        [GetHashKey("WEAPON_COMBATPISTOL")] = "Combat Pistol",
-        [GetHashKey("WEAPON_PISTOL50")] = "Pistol .50",
-        [GetHashKey("WEAPON_SNSPISTOL")] = "SNS Pistol",
-        [GetHashKey("WEAPON_SNSPISTOL_MK2")] = "SNS Pistol MK2",
-        [GetHashKey("WEAPON_HEAVYPISTOL")] = "Heavy Pistol",
-        [GetHashKey("WEAPON_VINTAGEPISTOL")] = "Vintage Pistol",
-        [GetHashKey("WEAPON_FLAREGUN")] = "Flare Gun",
-        [GetHashKey("WEAPON_MARKSMANPISTOL")] = "Marksman Pistol",
-        [GetHashKey("WEAPON_REVOLVER")] = "Heavy Revolver",
-        [GetHashKey("WEAPON_REVOLVER_MK2")] = "Heavy Revolver MK2",
-        [GetHashKey("WEAPON_DOUBLEACTION")] = "Double Action Revolver",
-        [GetHashKey("WEAPON_APPISTOL")] = "AP Pistol",
-        [GetHashKey("WEAPON_STUNGUN")] = "Stun Gun",
-        [GetHashKey("WEAPON_CERAMICPISTOL")] = "Ceramic Pistol",
-        [GetHashKey("WEAPON_NAVYREVOLVER")] = "Navy Revolver",
+        [GetHashKey("WEAPON_SWITCHBLADE")] = "Navaja",
+        [GetHashKey("WEAPON_NIGHTSTICK")] = "Porra",
+        [GetHashKey("WEAPON_WRENCH")] = "Llave inglesa",
+        [GetHashKey("WEAPON_BATTLEAXE")] = "Hacha de batalla",
+        [GetHashKey("WEAPON_POOLCUE")] = "Taco de billar",
+        [GetHashKey("WEAPON_STONE_HATCHET")] = "Hacha de piedra",
+        [GetHashKey("WEAPON_PISTOL")] = "Pistola",
+        [GetHashKey("WEAPON_PISTOL_MK2")] = "Pistola MK2",
+        [GetHashKey("WEAPON_COMBATPISTOL")] = "Pistola de combate",
+        [GetHashKey("WEAPON_PISTOL50")] = "Pistola .50",
+        [GetHashKey("WEAPON_SNSPISTOL")] = "Pistola SNS",
+        [GetHashKey("WEAPON_SNSPISTOL_MK2")] = "Pistola SNS MK2",
+        [GetHashKey("WEAPON_HEAVYPISTOL")] = "Pistola pesada",
+        [GetHashKey("WEAPON_VINTAGEPISTOL")] = "Pistola vintage",
+        [GetHashKey("WEAPON_FLAREGUN")] = "Lanza bengalas",
+        [GetHashKey("WEAPON_MARKSMANPISTOL")] = "Pistola de tirador",
+        [GetHashKey("WEAPON_REVOLVER")] = "Revolver pesado",
+        [GetHashKey("WEAPON_REVOLVER_MK2")] = "Revolver pesado MK2",
+        [GetHashKey("WEAPON_DOUBLEACTION")] = "Revolver de doble accion",
+        [GetHashKey("WEAPON_APPISTOL")] = "Pistola AP",
+        [GetHashKey("WEAPON_STUNGUN")] = "Taser",
+        [GetHashKey("WEAPON_CERAMICPISTOL")] = "Pistola ceramica",
+        [GetHashKey("WEAPON_NAVYREVOLVER")] = "Revolver naval",
         [GetHashKey("WEAPON_MICROSMG")] = "Micro SMG",
         [GetHashKey("WEAPON_SMG")] = "SMG",
         [GetHashKey("WEAPON_SMG_MK2")] = "SMG MK2",
-        [GetHashKey("WEAPON_ASSAULTSMG")] = "Assault SMG",
-        [GetHashKey("WEAPON_COMBATPDW")] = "Combat PDW",
-        [GetHashKey("WEAPON_MACHINEPISTOL")] = "Machine Pistol",
+        [GetHashKey("WEAPON_ASSAULTSMG")] = "SMG de asalto",
+        [GetHashKey("WEAPON_COMBATPDW")] = "PDW de combate",
+        [GetHashKey("WEAPON_MACHINEPISTOL")] = "Pistola ametralladora",
         [GetHashKey("WEAPON_MINISMG")] = "Mini SMG",
-        [GetHashKey("WEAPON_GUSENBERG")] = "Gusenberg Sweeper",
-        [GetHashKey("WEAPON_PUMPSHOTGUN")] = "Pump Shotgun",
-        [GetHashKey("WEAPON_PUMPSHOTGUN_MK2")] = "Pump Shotgun MK2",
-        [GetHashKey("WEAPON_SAWNOFFSHOTGUN")] = "Sawed-Off Shotgun",
-        [GetHashKey("WEAPON_ASSAULTSHOTGUN")] = "Assault Shotgun",
-        [GetHashKey("WEAPON_BULLPUPSHOTGUN")] = "Bullpup Shotgun",
-        [GetHashKey("WEAPON_MUSKET")] = "Musket",
-        [GetHashKey("WEAPON_HEAVYSHOTGUN")] = "Heavy Shotgun",
-        [GetHashKey("WEAPON_DBSHOTGUN")] = "Double Barrel Shotgun",
-        [GetHashKey("WEAPON_AUTOSHOTGUN")] = "Auto Shotgun",
-        [GetHashKey("WEAPON_COMBATSHOTGUN")] = "Combat Shotgun",
-        [GetHashKey("WEAPON_ASSAULTRIFLE")] = "Assault Rifle",
-        [GetHashKey("WEAPON_ASSAULTRIFLE_MK2")] = "Assault Rifle MK2",
-        [GetHashKey("WEAPON_CARBINERIFLE")] = "Carbine Rifle",
-        [GetHashKey("WEAPON_CARBINERIFLE_MK2")] = "Carbine Rifle MK2",
-        [GetHashKey("WEAPON_ADVANCEDRIFLE")] = "Advanced Rifle",
-        [GetHashKey("WEAPON_SPECIALCARBINE")] = "Special Carbine",
-        [GetHashKey("WEAPON_SPECIALCARBINE_MK2")] = "Special Carbine MK2",
-        [GetHashKey("WEAPON_BULLPUPRIFLE")] = "Bullpup Rifle",
-        [GetHashKey("WEAPON_BULLPUPRIFLE_MK2")] = "Bullpup Rifle MK2",
-        [GetHashKey("WEAPON_COMPACTRIFLE")] = "Compact Rifle",
-        [GetHashKey("WEAPON_MILITARYRIFLE")] = "Military Rifle",
-        [GetHashKey("WEAPON_HEAVYRIFLE")] = "Heavy Rifle",
-        [GetHashKey("WEAPON_TACTICALRIFLE")] = "Tactical Rifle",
-        [GetHashKey("WEAPON_SNIPERRIFLE")] = "Sniper Rifle",
-        [GetHashKey("WEAPON_HEAVYSNIPER")] = "Heavy Sniper",
-        [GetHashKey("WEAPON_HEAVYSNIPER_MK2")] = "Heavy Sniper MK2",
-        [GetHashKey("WEAPON_MARKSMANRIFLE")] = "Marksman Rifle",
-        [GetHashKey("WEAPON_MARKSMANRIFLE_MK2")] = "Marksman Rifle MK2",
-        [GetHashKey("WEAPON_PRECISIONRIFLE")] = "Precision Rifle",
+        [GetHashKey("WEAPON_GUSENBERG")] = "Gusenberg",
+        [GetHashKey("WEAPON_PUMPSHOTGUN")] = "Escopeta de bomba",
+        [GetHashKey("WEAPON_PUMPSHOTGUN_MK2")] = "Escopeta de bomba MK2",
+        [GetHashKey("WEAPON_SAWNOFFSHOTGUN")] = "Escopeta recortada",
+        [GetHashKey("WEAPON_ASSAULTSHOTGUN")] = "Escopeta de asalto",
+        [GetHashKey("WEAPON_BULLPUPSHOTGUN")] = "Escopeta bullpup",
+        [GetHashKey("WEAPON_MUSKET")] = "Mosquete",
+        [GetHashKey("WEAPON_HEAVYSHOTGUN")] = "Escopeta pesada",
+        [GetHashKey("WEAPON_DBSHOTGUN")] = "Escopeta de dos canones",
+        [GetHashKey("WEAPON_AUTOSHOTGUN")] = "Escopeta automatica",
+        [GetHashKey("WEAPON_COMBATSHOTGUN")] = "Escopeta de combate",
+        [GetHashKey("WEAPON_ASSAULTRIFLE")] = "Fusil de asalto",
+        [GetHashKey("WEAPON_ASSAULTRIFLE_MK2")] = "Fusil de asalto MK2",
+        [GetHashKey("WEAPON_CARBINERIFLE")] = "Carabina",
+        [GetHashKey("WEAPON_CARBINERIFLE_MK2")] = "Carabina MK2",
+        [GetHashKey("WEAPON_ADVANCEDRIFLE")] = "Fusil avanzado",
+        [GetHashKey("WEAPON_SPECIALCARBINE")] = "Carabina especial",
+        [GetHashKey("WEAPON_SPECIALCARBINE_MK2")] = "Carabina especial MK2",
+        [GetHashKey("WEAPON_BULLPUPRIFLE")] = "Fusil bullpup",
+        [GetHashKey("WEAPON_BULLPUPRIFLE_MK2")] = "Fusil bullpup MK2",
+        [GetHashKey("WEAPON_COMPACTRIFLE")] = "Fusil compacto",
+        [GetHashKey("WEAPON_MILITARYRIFLE")] = "Fusil militar",
+        [GetHashKey("WEAPON_HEAVYRIFLE")] = "Fusil pesado",
+        [GetHashKey("WEAPON_TACTICALRIFLE")] = "Fusil tactico",
+        [GetHashKey("WEAPON_SNIPERRIFLE")] = "Fusil de francotirador",
+        [GetHashKey("WEAPON_HEAVYSNIPER")] = "Francotirador pesado",
+        [GetHashKey("WEAPON_HEAVYSNIPER_MK2")] = "Francotirador pesado MK2",
+        [GetHashKey("WEAPON_MARKSMANRIFLE")] = "Fusil de tirador",
+        [GetHashKey("WEAPON_MARKSMANRIFLE_MK2")] = "Fusil de tirador MK2",
+        [GetHashKey("WEAPON_PRECISIONRIFLE")] = "Fusil de precision",
         [GetHashKey("WEAPON_RPG")] = "RPG",
-        [GetHashKey("WEAPON_GRENADELAUNCHER")] = "Grenade Launcher",
-        [GetHashKey("WEAPON_GRENADELAUNCHER_SMOKE")] = "Grenade Launcher Smoke",
+        [GetHashKey("WEAPON_GRENADELAUNCHER")] = "Lanzagranadas",
+        [GetHashKey("WEAPON_GRENADELAUNCHER_SMOKE")] = "Lanzagranadas de humo",
         [GetHashKey("WEAPON_MINIGUN")] = "Minigun",
-        [GetHashKey("WEAPON_FIREWORK")] = "Firework Launcher",
+        [GetHashKey("WEAPON_FIREWORK")] = "Lanzacohetes de fuegos artificiales",
         [GetHashKey("WEAPON_RAILGUN")] = "Railgun",
-        [GetHashKey("WEAPON_HOMINGLAUNCHER")] = "Homing Launcher",
-        [GetHashKey("WEAPON_COMPACTLAUNCHER")] = "Compact Grenade Launcher",
+        [GetHashKey("WEAPON_HOMINGLAUNCHER")] = "Lanzamisiles guiados",
+        [GetHashKey("WEAPON_COMPACTLAUNCHER")] = "Lanzagranadas compacto",
         [GetHashKey("WEAPON_RAYMINIGUN")] = "Widowmaker",
-        [GetHashKey("WEAPON_EMPLAUNCHER")] = "Compact EMP Launcher",
+        [GetHashKey("WEAPON_EMPLAUNCHER")] = "Lanzador EMP compacto",
         [GetHashKey("WEAPON_RAILGUNXM3")] = "Railgun XM3",
     }
 
-    return weaponHashToName[weaponHash] or "Unknown Weapon"
+    return weaponHashToName[weaponHash] or "Arma desconocida"
 end
 
 local function GetESPSettings()
     local settings = {}
     for _, cat in ipairs(Menu.Categories) do
-        if cat.name == "Visual" and cat.tabs then
+        if cat.name == "Visuales" and cat.tabs then
             for _, tab in ipairs(cat.tabs) do
                 if tab.name == "ESP" and tab.items then
                     for _, item in ipairs(tab.items) do
@@ -2160,43 +2150,43 @@ local function RenderPedESP(targetPed, playerIdx, settings, screenW, screenH, my
 
     if onScreen then
 
-        local drawSkeleton = settings["Draw Skeleton"] and settings["Draw Skeleton"].value
-        local drawBox = settings["Draw Box"] and settings["Draw Box"].value
-        local drawLine = settings["Draw Line"] and settings["Draw Line"].value
-        local drawHealth = settings["Draw Health"] and settings["Draw Health"].value
-        local drawArmor = settings["Draw Armor"] and settings["Draw Armor"].value
+        local drawSkeleton = settings["Dibujar esqueleto"] and settings["Dibujar esqueleto"].value
+        local drawBox = settings["Dibujar caja"] and settings["Dibujar caja"].value
+        local drawLine = settings["Dibujar linea"] and settings["Dibujar linea"].value
+        local drawHealth = settings["Mostrar salud"] and settings["Mostrar salud"].value
+        local drawArmor = settings["Mostrar armadura"] and settings["Mostrar armadura"].value
 
-        local drawNameItem = settings["Draw Name"]
+        local drawNameItem = settings["Mostrar nombre"]
         local drawName = drawNameItem and drawNameItem.value
-        local drawNamePosItem = settings["Name Position"]
+        local drawNamePosItem = settings["Posicion del nombre"]
         local drawNamePos = (drawNamePosItem and drawNamePosItem.selected) or 1
 
-        local drawIDItem = settings["Draw ID"]
+        local drawIDItem = settings["Mostrar ID"]
         local drawID = drawIDItem and drawIDItem.value
-        local drawIDPosItem = settings["ID Position"]
+        local drawIDPosItem = settings["Posicion ID"]
         local drawIDPos = (drawIDPosItem and drawIDPosItem.selected) or 1
 
-        local drawDistItem = settings["Draw Distance"]
+        local drawDistItem = settings["Mostrar distancia"]
         local drawDist = drawDistItem and drawDistItem.value
-        local drawDistPosItem = settings["Distance Position"]
+        local drawDistPosItem = settings["Posicion distancia"]
         local drawDistPos = (drawDistPosItem and drawDistPosItem.selected) or 1
 
-        local drawWeaponItem = settings["Draw Weapon"]
+        local drawWeaponItem = settings["Mostrar arma"]
         local drawWeapon = drawWeaponItem and drawWeaponItem.value
-        local drawWeaponPosItem = settings["Weapon Position"]
+        local drawWeaponPosItem = settings["Posicion arma"]
         local drawWeaponPos = (drawWeaponPosItem and drawWeaponPosItem.selected) or 1
 
         local skelColor = ESPColors[1]
-        if settings["Skeleton Color"] then skelColor = ESPColors[settings["Skeleton Color"].selected] or skelColor end
+        if settings["Color esqueleto"] then skelColor = ESPColors[settings["Color esqueleto"].selected] or skelColor end
 
         local boxColor = ESPColors[1]
-        if settings["Box Color"] then boxColor = ESPColors[settings["Box Color"].selected] or boxColor end
+        if settings["Color caja"] then boxColor = ESPColors[settings["Color caja"].selected] or boxColor end
 
         local lineColor = ESPColors[1]
-        if settings["Line Color"] then lineColor = ESPColors[settings["Line Color"].selected] or lineColor end
+        if settings["Color linea"] then lineColor = ESPColors[settings["Color linea"].selected] or lineColor end
 
         local textColor = ESPColors[1]
-        if settings["Text Color"] then textColor = ESPColors[settings["Text Color"].selected] or textColor end
+        if settings["Color texto"] then textColor = ESPColors[settings["Color texto"].selected] or textColor end
 
         if drawSkeleton then
             local boneCache = {}
@@ -2393,9 +2383,9 @@ end
 local function GetWorldSettings()
     local settings = {}
     for _, cat in ipairs(Menu.Categories) do
-        if cat.name == "Visual" and cat.tabs then
+        if cat.name == "Visuales" and cat.tabs then
             for _, tab in ipairs(cat.tabs) do
-                if tab.name == "World" and tab.items then
+                if tab.name == "Mundo" and tab.items then
                     for _, item in ipairs(tab.items) do
                         settings[item.name] = item
                     end
@@ -2411,7 +2401,7 @@ local worldSettings = nil
 local function RenderWorldVisuals(settings)
     if not settings then return end
 
-    Actions.fpsBoostItem = settings["FPS Boost"]
+    Actions.fpsBoostItem = settings["Mejorar FPS"]
     if Actions.fpsBoostItem and Actions.fpsBoostItem.value then
         if OverrideLodscaleThisFrame then OverrideLodscaleThisFrame(0.35) end
         if SetDisableDecalRenderingThisFrame then SetDisableDecalRenderingThisFrame() end
@@ -2433,15 +2423,15 @@ local function RenderWorldVisuals(settings)
         if SetGrassCullDistanceScale then SetGrassCullDistanceScale(1.0) end
     end
 
-Actions.blossomItem = FindItem("Settings", "General", "Blossom")
+Actions.blossomItem = FindItem("Ajustes", "General", "Flores")
 if Actions.blossomItem then
     Actions.blossomItem.onClick = function(value)
         Menu.ShowBlossoms = value
     end
 end
 
-    Actions.timeItem = settings["Time"]
-    Actions.freezeItem = settings["Freeze Time"]
+    Actions.timeItem = settings["Hora"]
+    Actions.freezeItem = settings["Congelar hora"]
 
     if Actions.freezeItem and Actions.freezeItem.value then
         if Actions.timeItem then
@@ -2449,7 +2439,7 @@ end
         end
     end
 
-    Actions.weatherItem = settings["Weather"]
+    Actions.weatherItem = settings["Clima"]
     if Actions.weatherItem and Actions.weatherItem.options then
         local selectedWeather = Actions.weatherItem.options[Actions.weatherItem.selected]
         if selectedWeather then
@@ -2457,7 +2447,7 @@ end
         end
     end
 
-    Actions.blackoutItem = settings["Blackout"]
+    Actions.blackoutItem = settings["Apagon"]
     if Actions.blackoutItem then
         SetBlackout(Actions.blackoutItem.value)
     end
@@ -2496,7 +2486,7 @@ local function FindItem(categoryName, tabName, itemName)
     if success then
         return result
     else
-        print("FindItem error: " .. tostring(result))
+        print("Error en FindItem: " .. tostring(result))
         return nil
     end
 end
@@ -2586,9 +2576,9 @@ end
 
 local function UpdatePlayerList()
     for _, cat in ipairs(Menu.Categories) do
-        if cat.name == "Online" and cat.tabs then
+        if cat.name == "En linea" and cat.tabs then
             for tabIdx, tab in ipairs(cat.tabs) do
-                if tab.name == "Player List" then
+                if tab.name == "Lista de jugadores" then
                     for _, item in ipairs(tab.items) do
                         if item.type == "selector" then
                             if item.name == "Select" then
@@ -2606,7 +2596,7 @@ local function UpdatePlayerList()
                     tab.items = {}
 
                     Actions.spectateItem = {
-                        name = "Spectate Player",
+                        name = "Espectar jugador",
                         type = "toggle",
                         value = Menu.PlayerListSpectateEnabled
                     }
@@ -2617,9 +2607,9 @@ local function UpdatePlayerList()
                     table.insert(tab.items, Actions.spectateItem)
 
                     Actions.teleportItem = {
-                        name = "Teleport",
+                        name = "Teletransporte",
                         type = "selector",
-                        options = {"To Player", "Into Vehicle"},
+                        options = {"Al jugador", "Al vehiculo"},
                         selected = Menu.PlayerListTeleportIndex
                     }
                     Actions.teleportItem.onClick = function(index, option)
@@ -2697,9 +2687,9 @@ local function UpdatePlayerList()
                     table.sort(otherPlayers, function(a, b) return a.distance < b.distance end)
 
                     Actions.selectModeItem = {
-                        name = "Select",
+                        name = "Seleccionar",
                         type = "selector",
-                        options = {"Select All", "Unselect All"},
+                        options = {"Seleccionar todos", "Deseleccionar todos"},
                         selected = Menu.PlayerListSelectIndex
                     }
                     Actions.selectModeItem.onClick = function(index, option)
@@ -2719,9 +2709,9 @@ local function UpdatePlayerList()
 
                     Menu.PlayerListTypeIndex = Menu.PlayerListTypeIndex or 1
                     Actions.typeItem = {
-                        name = "Type",
+                        name = "Tipo",
                         type = "selector",
-                        options = {"None", "On Foot", "In Vehicle"},
+                        options = {"Ninguno", "A pie", "En vehiculo"},
                         selected = Menu.PlayerListTypeIndex
                     }
                     Actions.typeItem.onClick = function(index, option)
@@ -2732,7 +2722,7 @@ local function UpdatePlayerList()
                     table.insert(tab.items, {
                         name = "",
                         isSeparator = true,
-                        separatorText = "Player List"
+                        separatorText = "Lista de jugadores"
                     })
 
                     local function isPlayerSelected(playerId)
@@ -2777,7 +2767,7 @@ local function UpdatePlayerList()
                     
                     if shouldShowSelf then
                         local selfToggle = {
-                            name = myName .. " (You)",
+                            name = myName .. " (Tu)",
                             type = "toggle",
                             value = isPlayerSelected(myServerId),
                             playerId = myServerId,
@@ -2818,7 +2808,7 @@ Citizen.CreateThread(function()
 end)
 
 Menu.OnRender = function()
-    Actions.noclipItem = FindItem("Player", "Movement", "Noclip")
+    Actions.noclipItem = FindItem("Jugador", "Movimiento", "Noclip")
     if Actions.noclipItem and Actions.noclipItem.value then
         local currentSpeed = Actions.noclipItem.sliderValue or 1.0
         if lastNoclipSpeed ~= currentSpeed then
@@ -2838,8 +2828,8 @@ Menu.OnRender = function()
 
     RenderWorldVisuals(worldSettings)
 
-    local drawSelf = espSettings["Draw Self"] and espSettings["Draw Self"].value
-    local enablePlayerESP = espSettings["Enable Player ESP"] and espSettings["Enable Player ESP"].value
+    local drawSelf = espSettings["Dibujarme"] and espSettings["Dibujarme"].value
+    local enablePlayerESP = espSettings["Activar ESP"] and espSettings["Activar ESP"].value
 
     if drawSelf or enablePlayerESP then
         Menu.PreventResetFrame = true
@@ -3800,7 +3790,7 @@ end
 local function SpawnVehicle(modelName)
     if not modelName then return end
 
-    Actions.tpItem = FindItem("Vehicle", "Spawn", "Teleport Into")
+    Actions.tpItem = FindItem("Vehiculo", "Spawnear", "Teletransportarse dentro")
     local shouldTeleport = Actions.tpItem and Actions.tpItem.value or false
 
     if type(Susano) == "table" and type(Susano.InjectResource) == "function" then
@@ -4716,9 +4706,9 @@ local function ToggleShiftBoost(enable)
     end
 end
 
-local spawnItems = {"Car", "Moto", "Plane", "Boat"}
+local spawnItems = {"Coche", "Moto", "Avion", "Barco"}
 for _, itemName in ipairs(spawnItems) do
-    local item = FindItem("Vehicle", "Spawn", itemName)
+    local item = FindItem("Vehiculo", "Spawnear", itemName)
     if item then
         item.onClick = function(index, option)
             SpawnVehicle(option)
@@ -4726,21 +4716,21 @@ for _, itemName in ipairs(spawnItems) do
     end
 end
 
-Actions.maxUpgradeItem = FindItem("Vehicle", "Performance", "Max Upgrade")
+Actions.maxUpgradeItem = FindItem("Vehiculo", "Rendimiento", "Mejora maxima")
 if Actions.maxUpgradeItem then
     Actions.maxUpgradeItem.onClick = function()
         MaxUpgrade()
     end
 end
 
-Actions.repairVehicleItem = FindItem("Vehicle", "Performance", "Repair Vehicle")
+Actions.repairVehicleItem = FindItem("Vehiculo", "Rendimiento", "Reparar vehiculo")
 if Actions.repairVehicleItem then
     Actions.repairVehicleItem.onClick = function()
         RepairVehicle()
     end
 end
 
-Actions.throwFromVehicleItem = FindItem("Vehicle", "Performance", "Throw From Vehicle")
+Actions.throwFromVehicleItem = FindItem("Vehiculo", "Rendimiento", "Lanzar desde vehiculo")
 if Actions.throwFromVehicleItem then
     Actions.throwFromVehicleItem.onClick = function()
         local isEnabled = Actions.throwFromVehicleItem.value
@@ -4827,14 +4817,14 @@ local function ToggleEasyHandling(enable)
     end
 end
 
-Actions.forceEngineItem = FindItem("Vehicle", "Performance", "Force Vehicle Engine")
+Actions.forceEngineItem = FindItem("Vehiculo", "Rendimiento", "Forzar motor encendido")
 if Actions.forceEngineItem then
     Actions.forceEngineItem.onClick = function(value)
         ToggleForceVehicleEngine(value)
     end
 end
 
-Actions.easyHandlingItem = FindItem("Vehicle", "Performance", "Easy Handling")
+Actions.easyHandlingItem = FindItem("Vehiculo", "Rendimiento", "Manejo facil")
 if Actions.easyHandlingItem then
     Actions.easyHandlingItem.onClick = function(value)
         ToggleEasyHandling(value)
@@ -5038,7 +5028,7 @@ end
 
 function Menu.ActionChangePlate()
     if Menu and Menu.OpenInput then
-        Menu.OpenInput("Change Plate", "Entrez le texte de la plaque (max 8 caractères):", function(input)
+        Menu.OpenInput("Cambiar matricula", "Escribe el texto de la matricula (max 8 caracteres):", function(input)
             if input and input ~= "" then
                 local plateText = string.sub(input, 1, 8)
                 if type(Susano) == "table" and type(Susano.InjectResource) == "function" then
@@ -5510,56 +5500,56 @@ function Menu.ActionGiveNearestVehicle()
     end
 end
 
-Actions.changePlateItem = FindItem("Vehicle", "Performance", "Change Plate")
+Actions.changePlateItem = FindItem("Vehiculo", "Rendimiento", "Cambiar matricula")
 if Actions.changePlateItem then
     Actions.changePlateItem.onClick = function()
         Menu.ActionChangePlate()
     end
 end
 
-Actions.cleanVehicleItem = FindItem("Vehicle", "Performance", "Clean Vehicle")
+Actions.cleanVehicleItem = FindItem("Vehiculo", "Rendimiento", "Limpiar vehiculo")
 if Actions.cleanVehicleItem then
     Actions.cleanVehicleItem.onClick = function()
         Menu.ActionCleanVehicle()
     end
 end
 
-Actions.flipVehicleItem = FindItem("Vehicle", "Performance", "Flip Vehicle")
+Actions.flipVehicleItem = FindItem("Vehiculo", "Rendimiento", "Enderezar vehiculo")
 if Actions.flipVehicleItem then
     Actions.flipVehicleItem.onClick = function()
         Menu.ActionFlipVehicle()
     end
 end
 
-Actions.deleteVehicleItem = FindItem("Vehicle", "Performance", "Delete Vehicle")
+Actions.deleteVehicleItem = FindItem("Vehiculo", "Rendimiento", "Eliminar vehiculo")
 if Actions.deleteVehicleItem then
     Actions.deleteVehicleItem.onClick = function()
         Menu.ActionDeleteVehicle()
     end
 end
 
-Actions.unlockAllVehicleItem = FindItem("Vehicle", "Performance", "Unlock All Vehicle")
+Actions.unlockAllVehicleItem = FindItem("Vehiculo", "Rendimiento", "Desbloquear todos los vehiculos")
 if Actions.unlockAllVehicleItem then
     Actions.unlockAllVehicleItem.onClick = function(value)
         Menu.unlockAllVehicleEnabled = value
     end
 end
 
-Actions.teleportIntoItem = FindItem("Vehicle", "Performance", "Teleport into Closest Vehicle")
+Actions.teleportIntoItem = FindItem("Vehiculo", "Rendimiento", "TP al vehiculo mas cercano")
 if Actions.teleportIntoItem then
     Actions.teleportIntoItem.onClick = function()
         Menu.ActionTeleportIntoClosestVehicle()
     end
 end
 
-Actions.giveNearestItem = FindItem("Vehicle", "Performance", "Give Nearest Vehicle")
+Actions.giveNearestItem = FindItem("Vehiculo", "Rendimiento", "Regalar vehiculo mas cercano")
 if Actions.giveNearestItem then
     Actions.giveNearestItem.onClick = function()
         Menu.ActionGiveNearestVehicle()
     end
 end
 
-Actions.giveRampWallItem = FindItem("Vehicle", "Performance", "Give")
+Actions.giveRampWallItem = FindItem("Vehiculo", "Rendimiento", "Regalar")
 if Actions.giveRampWallItem and Actions.giveRampWallItem.type == "selector" then
     Actions.giveRampWallItem.onClick = function(index, option)
         if index == 1 then
@@ -5572,35 +5562,35 @@ if Actions.giveRampWallItem and Actions.giveRampWallItem.type == "selector" then
     end
 end
 
-Actions.rainbowPaintItem = FindItem("Vehicle", "Performance", "Rainbow Paint")
+Actions.rainbowPaintItem = FindItem("Vehiculo", "Rendimiento", "Pintura arcoiris")
 if Actions.rainbowPaintItem then
     Actions.rainbowPaintItem.onClick = function(value)
         ToggleRainbowPaint(value)
     end
 end
 
-Actions.noCollisionItem = FindItem("Vehicle", "Performance", "No Collision")
+Actions.noCollisionItem = FindItem("Vehiculo", "Rendimiento", "Sin colisiones")
 if Actions.noCollisionItem then
     Actions.noCollisionItem.onClick = function(value)
         ToggleNoCollision(value)
     end
 end
 
-Actions.bunnyHopItem = FindItem("Vehicle", "Performance", "Bunny Hop")
+Actions.bunnyHopItem = FindItem("Vehiculo", "Rendimiento", "Salto de conejo")
 if Actions.bunnyHopItem then
     Actions.bunnyHopItem.onClick = function(value)
         ToggleBunnyHop(value)
     end
 end
 
-Actions.backFlipItem = FindItem("Vehicle", "Performance", "Back Flip")
+Actions.backFlipItem = FindItem("Vehiculo", "Rendimiento", "Salto hacia atras")
 if Actions.backFlipItem then
     Actions.backFlipItem.onClick = function(value)
         ToggleBackFlip(value)
     end
 end
 
-Actions.shiftBoostItem = FindItem("Vehicle", "Performance", "Shift Boost")
+Actions.shiftBoostItem = FindItem("Vehiculo", "Rendimiento", "Boost con Shift")
 if Actions.shiftBoostItem then
     Actions.shiftBoostItem.onClick = function(value)
         ToggleShiftBoost(value)
@@ -5991,8 +5981,8 @@ local function ToggleGravitateVehicle(enable, speed)
     end
 end
 
-Actions.gravitateVehicleItem = FindItem("Vehicle", "Performance", "Gravitate Vehicle")
-Actions.gravitateSpeedItem = FindItem("Vehicle", "Performance", "Gravitate Speed")
+Actions.gravitateVehicleItem = FindItem("Vehiculo", "Rendimiento", "Vehiculo gravitatorio")
+Actions.gravitateSpeedItem = FindItem("Vehiculo", "Rendimiento", "Velocidad gravitatoria")
 
 if Actions.gravitateVehicleItem then
     Actions.gravitateVehicleItem.onClick = function(value)
@@ -6020,28 +6010,28 @@ if Actions.gravitateSpeedItem then
     end
 end
 
-Actions.godmodeItem = FindItem("Player", "Self", "Godmode")
+Actions.godmodeItem = FindItem("Jugador", "Personal", "Dios")
 if Actions.godmodeItem then
     Actions.godmodeItem.onClick = function(value)
         ToggleFullGodmode(value)
     end
 end
 
-Actions.semiGodmodeItem = FindItem("Player", "Self", "Semi Godmode")
+Actions.semiGodmodeItem = FindItem("Jugador", "Personal", "Semi Dios")
 if Actions.semiGodmodeItem then
     Actions.semiGodmodeItem.onClick = function(value)
         ToggleSemiGodmode(value)
     end
 end
 
-Actions.antiHeadshotItem = FindItem("Player", "Self", "Anti Headshot")
+Actions.antiHeadshotItem = FindItem("Jugador", "Personal", "Anti Cabeza")
 if Actions.antiHeadshotItem then
     Actions.antiHeadshotItem.onClick = function(value)
         ToggleAntiHeadshot(value)
     end
 end
 
-Actions.noclipItem = FindItem("Player", "Movement", "Noclip")
+Actions.noclipItem = FindItem("Jugador", "Movimiento", "Noclip")
 if Actions.noclipItem then
     Actions.noclipItem.onClick = function(value)
         local speed = Actions.noclipItem.sliderValue or 1.0
@@ -6068,7 +6058,7 @@ if Actions.noclipItem then
     end
 end
 
-Actions.noclipTypeItem = FindItem("Player", "Movement", "NoClip Type")
+Actions.noclipTypeItem = FindItem("Jugador", "Movimiento", "Tipo Noclip")
 if Actions.noclipTypeItem then
     Actions.noclipTypeItem.onClick = function(index, option)
         local oldType = noclipType
@@ -6094,91 +6084,91 @@ if Actions.noclipTypeItem then
     end
 end
 
-Actions.tpAllVehiclesItem = FindItem("Player", "Self", "TP all vehicle to me")
+Actions.tpAllVehiclesItem = FindItem("Jugador", "Personal", "TP todos los vehiculos a mi")
 if Actions.tpAllVehiclesItem then
     Actions.tpAllVehiclesItem.onClick = function()
         Menu.ActionTPAllVehiclesToMe()
     end
 end
 
-Actions.reviveItem = FindItem("Player", "Self", "Revive")
+Actions.reviveItem = FindItem("Jugador", "Personal", "Revivir")
 if Actions.reviveItem then
     Actions.reviveItem.onClick = function()
         Menu.ActionRevive()
     end
 end
 
-Actions.maxHealthItem = FindItem("Player", "Self", "Max Health")
+Actions.maxHealthItem = FindItem("Jugador", "Personal", "Salud Maxima")
 if Actions.maxHealthItem then
     Actions.maxHealthItem.onClick = function()
         Menu.ActionMaxHealth()
     end
 end
 
-Actions.maxArmorItem = FindItem("Player", "Self", "Max Armor")
+Actions.maxArmorItem = FindItem("Jugador", "Personal", "Armadura Maxima")
 if Actions.maxArmorItem then
     Actions.maxArmorItem.onClick = function()
         Menu.ActionMaxArmor()
     end
 end
 
-Actions.detachItem = FindItem("Player", "Self", "Detach All Entitys")
+Actions.detachItem = FindItem("Jugador", "Personal", "Desenganchar todas las entidades")
 if Actions.detachItem then
     Actions.detachItem.onClick = function()
         Menu.ActionDetachAllEntitys()
     end
 end
 
-Actions.soloSessionItem = FindItem("Player", "Self", "Solo Session")
+Actions.soloSessionItem = FindItem("Jugador", "Personal", "Sesion Solitaria")
 if Actions.soloSessionItem then
     Actions.soloSessionItem.onClick = function(value)
         ToggleSoloSession(value)
     end
 end
 
-Actions.throwVehicleItem = FindItem("Player", "Self", "Throw Vehicle")
+Actions.throwVehicleItem = FindItem("Jugador", "Personal", "Lanzar vehiculo")
 if Actions.throwVehicleItem then
     Actions.throwVehicleItem.onClick = function(value)
         ToggleThrowVehicle(value)
     end
 end
 
-Actions.fastRunItem = FindItem("Player", "Movement", "Fast Run")
+Actions.fastRunItem = FindItem("Jugador", "Movimiento", "Correr rapido")
 if Actions.fastRunItem then
     Actions.fastRunItem.onClick = function(value)
         ToggleFastRun(value)
     end
 end
 
-Actions.noRagdollItem = FindItem("Player", "Movement", "No Ragdoll")
+Actions.noRagdollItem = FindItem("Jugador", "Movimiento", "Sin caidas")
 if Actions.noRagdollItem then
     Actions.noRagdollItem.onClick = function(value)
         ToggleNoRagdoll(value)
     end
 end
 
-Actions.tinyPlayerItem = FindItem("Player", "Self", "Tiny Player")
+Actions.tinyPlayerItem = FindItem("Jugador", "Personal", "Jugador pequeno")
 if Actions.tinyPlayerItem then
     Actions.tinyPlayerItem.onClick = function(value)
         ToggleTinyPlayer(value)
     end
 end
 
-Actions.infiniteStaminaItem = FindItem("Player", "Self", "Infinite Stamina")
+Actions.infiniteStaminaItem = FindItem("Jugador", "Personal", "Resistencia infinita")
 if Actions.infiniteStaminaItem then
     Actions.infiniteStaminaItem.onClick = function(value)
         ToggleInfiniteStamina(value)
     end
 end
 
-Actions.deleteAllPropsItem = FindItem("Visual", "World", "Delete All Props")
+Actions.deleteAllPropsItem = FindItem("Visuales", "Mundo", "Eliminar todos los props")
 if Actions.deleteAllPropsItem then
     Actions.deleteAllPropsItem.onClick = function()
         DeleteAllProps()
     end
 end
 
-Actions.randomOutfitItem = FindItem("Player", "Wardrobe", "Random Outfit")
+Actions.randomOutfitItem = FindItem("Jugador", "Ropero", "Atuendo aleatorio")
 if Actions.randomOutfitItem then
     Actions.randomOutfitItem.onClick = function()
         Menu.ActionRandomOutfit()
@@ -6292,11 +6282,11 @@ local function CollectCurrentOutfit()
     return outfit
 end
 
-Actions.saveOutfitItem = FindItem("Player", "Wardrobe", "Save Outfit")
+Actions.saveOutfitItem = FindItem("Jugador", "Ropero", "Guardar atuendo")
 if Actions.saveOutfitItem then
     Actions.saveOutfitItem.onClick = function()
         if Menu and Menu.OpenInput then
-            Menu.OpenInput("Save Outfit", "Enter a code for your outfit:", function(code)
+            Menu.OpenInput("Guardar atuendo", "Introduce un codigo para tu atuendo:", function(code)
                 if not code or code == "" then return end
 
                 code = string.lower(string.gsub(code, "%s+", ""))
@@ -6305,7 +6295,7 @@ if Actions.saveOutfitItem then
 
                 if not outfit then
                     if Menu and Menu.OpenInput then
-                        Menu.OpenInput("Error", "Failed to collect outfit data", function() end)
+                        Menu.OpenInput("Error", "No se pudo recopilar el atuendo", function() end)
                     end
                     return
                 end
@@ -6330,16 +6320,16 @@ if Actions.saveOutfitItem then
 
                         if status == 200 then
                             if Menu and Menu.OpenInput then
-                                Menu.OpenInput("Success", "Outfit saved successfully!", function() end)
+                                Menu.OpenInput("Exito", "¡Atuendo guardado correctamente!", function() end)
                             end
                         else
                             if Menu and Menu.OpenInput then
-                                Menu.OpenInput("Error", "Failed to save outfit. Status: " .. tostring(status), function() end)
+                                Menu.OpenInput("Error", "Fallo al guardar el atuendo. Estado: " .. tostring(status), function() end)
                             end
                         end
                     else
                         if Menu and Menu.OpenInput then
-                            Menu.OpenInput("Error", "HTTP functions not available", function() end)
+                            Menu.OpenInput("Error", "Funciones HTTP no disponibles", function() end)
                         end
                     end
                 end)
@@ -6401,11 +6391,11 @@ local function ApplyOutfit(outfit)
     return true
 end
 
-Actions.loadOutfitItem = FindItem("Player", "Wardrobe", "Load Outfit")
+Actions.loadOutfitItem = FindItem("Jugador", "Ropero", "Cargar atuendo")
 if Actions.loadOutfitItem then
     Actions.loadOutfitItem.onClick = function()
         if Menu and Menu.OpenInput then
-            Menu.OpenInput("Load Outfit", "Enter outfit code:", function(code)
+            Menu.OpenInput("Cargar atuendo", "Introduce el codigo del atuendo:", function(code)
                 if not code or code == "" then return end
 
                 code = string.lower(string.gsub(code, "%s+", ""))
@@ -6445,32 +6435,32 @@ if Actions.loadOutfitItem then
 
                                     if not applySuccess then
                                         if Menu and Menu.OpenInput then
-                                            Menu.OpenInput("Error", "Failed to apply outfit", function() end)
+                                            Menu.OpenInput("Error", "Fallo al aplicar el atuendo", function() end)
                                         end
                                     end
                                 else
                                     if Menu and Menu.OpenInput then
-                                        Menu.OpenInput("Error", "Invalid outfit format", function() end)
+                                        Menu.OpenInput("Error", "Formato de atuendo invalido", function() end)
                                     end
                                 end
                             else
                                 if Menu and Menu.OpenInput then
-                                    Menu.OpenInput("Error", "Failed to parse outfit: " .. tostring(parseErr or "Unknown error"), function() end)
+                                    Menu.OpenInput("Error", "Fallo al parsear el atuendo: " .. tostring(parseErr or "Error desconocido"), function() end)
                                 end
                             end
                         elseif status == 404 then
                             if Menu and Menu.OpenInput then
-                                Menu.OpenInput("Error", "Outfit not found!", function() end)
+                                Menu.OpenInput("Error", "¡Atuendo no encontrado!", function() end)
                             end
                         else
                             if Menu and Menu.OpenInput then
-                                Menu.OpenInput("Error", "Failed to load outfit. Status: " .. tostring(status), function() end)
+                                Menu.OpenInput("Error", "Fallo al cargar el atuendo. Estado: " .. tostring(status), function() end)
                             end
                         end
                     end)
                 else
                     if Menu and Menu.OpenInput then
-                        Menu.OpenInput("Error", "HTTP functions not available", function() end)
+                        Menu.OpenInput("Error", "Funciones HTTP no disponibles", function() end)
                     end
                 end
             end)
@@ -6697,18 +6687,18 @@ function Menu.ActionWOutfit()
     })
 end
 
-Actions.outfitItem = FindItem("Player", "Wardrobe", "Outfit")
+Actions.outfitItem = FindItem("Jugador", "Ropero", "Atuendo")
 if Actions.outfitItem then
     Actions.outfitItem.onClick = function(index, option)
-        if option == "bnz outfit" then
+        if option == "bnz" then
             Menu.ActionBnzOutfit()
-        elseif option == "Staff Outfit" then
+        elseif option == "Staff" then
             Menu.ActionStaffOutfit()
-        elseif option == "Hitler Outfit" then
+        elseif option == "Hitler" then
             Menu.ActionHitlerOutfit()
         elseif option == "jy" then
             Menu.ActionJyOutfit()
-        elseif option == "w outfit" then
+        elseif option == "w" then
             Menu.ActionWOutfit()
         end
     end
@@ -6730,8 +6720,8 @@ local function _applyWardrobeSelection(itemName, selectedIndex)
     selectedIndex = tonumber(selectedIndex) or 1
     if selectedIndex < 1 then selectedIndex = 1 end
 
-    if itemName == "Hat" or itemName == "Glasses" then
-        local propId = (itemName == "Hat") and 0 or 1
+    if itemName == "Sombrero" or itemName == "Gafas" then
+        local propId = (itemName == "Sombrero") and 0 or 1
         local count = GetNumberOfPedPropDrawableVariations(ped, propId) or 0
         if count <= 0 then
             ClearPedProp(ped, propId)
@@ -6749,11 +6739,11 @@ local function _applyWardrobeSelection(itemName, selectedIndex)
     end
 
     local componentId = nil
-    if itemName == "Mask" then componentId = 1
+    if itemName == "Mascara" then componentId = 1
     elseif itemName == "Torso" then componentId = 11
-    elseif itemName == "Tshirt" then componentId = 8
-    elseif itemName == "Pants" then componentId = 4
-    elseif itemName == "Shoes" then componentId = 6
+    elseif itemName == "Camiseta" then componentId = 8
+    elseif itemName == "Pantalones" then componentId = 4
+    elseif itemName == "Zapatos" then componentId = 6
     end
 
     if componentId ~= nil then
@@ -6775,7 +6765,7 @@ local function _applyWardrobeSelection(itemName, selectedIndex)
 end
 
 local function _bindWardrobeSelector(itemName)
-    local item = FindItem("Player", "Wardrobe", itemName)
+    local item = FindItem("Jugador", "Ropero", itemName)
     if not item then return end
 
     item.onClick = function(index, _)
@@ -6786,13 +6776,13 @@ local function _bindWardrobeSelector(itemName)
     end
 end
 
-_bindWardrobeSelector("Hat")
-_bindWardrobeSelector("Mask")
-_bindWardrobeSelector("Glasses")
+_bindWardrobeSelector("Sombrero")
+_bindWardrobeSelector("Mascara")
+_bindWardrobeSelector("Gafas")
 _bindWardrobeSelector("Torso")
-_bindWardrobeSelector("Tshirt")
-_bindWardrobeSelector("Pants")
-_bindWardrobeSelector("Shoes")
+_bindWardrobeSelector("Camiseta")
+_bindWardrobeSelector("Pantalones")
+_bindWardrobeSelector("Zapatos")
 
 Menu.freecamEnabled = false
 local freecamSpeed = 0.5
@@ -6807,7 +6797,7 @@ local last_click_time = 0
 local freecam_mode = 1
 local freecam_max_mode = 2
 
-local FreecamOptions = {"Teleport", "Shoot Bullet", "Shoot Vehicle", "Delete Vehicle", "Kick From Vehicle", "Real Explosion", "Silent Explosion"}
+local FreecamOptions = {"Teletransportar", "Disparar bala", "Disparar vehiculo", "Eliminar vehiculo", "Expulsar", "Explosion real", "Explosion silenciosa"}
 local FreecamSelectedOption = 1
 local FreecamScrollOffset = 0
 
@@ -7083,9 +7073,9 @@ function realExplosion()
     local coords, entity = getAimCoords(MAX_RAY_DISTANCE)
     if coords then
         AddExplosion(coords.x, coords.y, coords.z, 0, 10.0, true, false, true)
-        drawText("real explosion", 0.5, 0.5, 0.6, 4, {0,255,0,255})
+        drawText("explosion real", 0.5, 0.5, 0.6, 4, {0,255,0,255})
     else
-        drawText("no target", 0.5, 0.5, 0.6, 4, {255,0,0,255})
+        drawText("sin objetivo", 0.5, 0.5, 0.6, 4, {255,0,0,255})
     end
 end
 
@@ -7093,16 +7083,16 @@ function silentExplosion()
     local coords, entity = getAimCoords(MAX_RAY_DISTANCE)
     if coords then
         AddExplosion(coords.x, coords.y, coords.z, 0, 10.0, false, true, false)
-        drawText("silent explosion (damage only)", 0.5, 0.5, 0.6, 4, {0,255,0,255})
+        drawText("explosion silenciosa (solo dano)", 0.5, 0.5, 0.6, 4, {0,255,0,255})
     else
-        drawText("no target", 0.5, 0.5, 0.6, 4, {255,0,0,255})
+        drawText("sin objetivo", 0.5, 0.5, 0.6, 4, {255,0,0,255})
     end
 end
 
 function kickFromVehicle()   
 local veh = getVehicleFromAim()
     if not veh then
-        drawText("no vehicle found", 0.5, 0.5, 0.6, 4, {255,0,0,255})
+        drawText("no se encontro vehiculo", 0.5, 0.5, 0.6, 4, {255,0,0,255})
         return
     end
     local originalPos = GetEntityCoords(playerPed)
@@ -7114,12 +7104,12 @@ local veh = getVehicleFromAim()
     Wait(100)
     local netId = NetworkGetNetworkIdFromEntity(veh)
     local success = TriggerServerEvent("myMenu:forcePlayerOut", netId)
-    drawText("server event sent", 0.5, 0.4, 0.5, 4, {255,255,0,255})
+    drawText("evento de servidor enviado", 0.5, 0.4, 0.5, 4, {255,255,0,255})
     Wait(500)
-    drawText("trying network control...", 0.5, 0.4, 0.5, 4, {255,255,0,255})
+    drawText("intentando control de red...", 0.5, 0.4, 0.5, 4, {255,255,0,255})
     local controlGained = RequestControl(veh, 1000)
     if controlGained then
-        drawText("control gained! local force...", 0.5, 0.4, 0.5, 4, {0,255,0,255})
+        drawText("¡control obtenido! forzando local...", 0.5, 0.4, 0.5, 4, {0,255,0,255})
         for seat = -1, 6 do
             local p = GetPedInVehicleSeat(veh, seat)
             if p and p ~= 0 and p ~= playerPed then
@@ -7127,26 +7117,26 @@ local veh = getVehicleFromAim()
             end
         end
     else
-        drawText("could not gain control.", 0.5, 0.4, 0.5, 4, {255,0,0,255})
+        drawText("no se pudo obtener control.", 0.5, 0.4, 0.5, 4, {255,0,0,255})
     end
     Wait(200)
     SetEntityCoords(playerPed, originalPos.x, originalPos.y, originalPos.z, false, false, false, true)
     SetEntityVisible(playerPed, wasVisible, false)
     FreezeEntityPosition(playerPed, false)
-    drawText("action completed!", 0.5, 0.5, 0.6, 4, {0,255,0,255})
+    drawText("¡accion completada!", 0.5, 0.5, 0.6, 4, {0,255,0,255})
 end
 
 function deleteVehicle()
     
     local playerPed = PlayerPedId()
     if not playerPed or not DoesEntityExist(playerPed) then
-        drawText("player ped invalid", 0.5, 0.5, 0.6, 4, {255,0,0,255})
+        drawText("ped del jugador invalido", 0.5, 0.5, 0.6, 4, {255,0,0,255})
         return
     end
 
     local veh = getVehicleFromAim()
     if not veh then
-        drawText("no vehicle found", 0.5, 0.5, 0.6, 4, {255,0,0,255})
+        drawText("no se encontro vehiculo", 0.5, 0.5, 0.6, 4, {255,0,0,255})
         return
     end
 
@@ -7164,12 +7154,12 @@ function deleteVehicle()
    
     local controlGained = RequestControl(veh, 1000)
     if controlGained then
-        drawText("control gained! deleting...", 0.5, 0.4, 0.5, 4, {0,255,0,255})
+        drawText("¡control obtenido! eliminando...", 0.5, 0.4, 0.5, 4, {0,255,0,255})
         
         SetEntityAsMissionEntity(veh, true, true)
         DeleteEntity(veh)
     else
-        drawText("could not gain control.", 0.5, 0.4, 0.5, 4, {255,0,0,255})
+        drawText("no se pudo obtener control.", 0.5, 0.4, 0.5, 4, {255,0,0,255})
     end
 
     Wait(200)
@@ -7180,9 +7170,9 @@ function deleteVehicle()
     FreezeEntityPosition(playerPed, false)
   
     if DoesEntityExist(veh) then
-        drawText("vehicle could not be deleted", 0.5, 0.5, 0.6, 4, {255,0,0,255})
+        drawText("el vehiculo no pudo ser eliminado", 0.5, 0.5, 0.6, 4, {255,0,0,255})
     else
-        drawText("vehicle deleted!", 0.5, 0.5, 0.6, 4, {0,255,0,255})
+        drawText("¡vehiculo eliminado!", 0.5, 0.5, 0.6, 4, {0,255,0,255})
     end
 end
 
@@ -7364,19 +7354,19 @@ function HandleInput()
     local click_pressed = IsDisabledControlJustPressed(0, 24)
     if click_pressed and not freecam_just_started and (current_time - last_click_time) > 200 then
         local selectedOptionName = FreecamOptions[FreecamSelectedOption]
-        if selectedOptionName == "Teleport" then
+        if selectedOptionName == "Teletransportar" then
             TeleportToFreecam()
-        elseif selectedOptionName == "Shoot Bullet" then
+        elseif selectedOptionName == "Disparar bala" then
             ShootBulletFromFreecam()
-        elseif selectedOptionName == "Shoot Vehicle" then
+        elseif selectedOptionName == "Disparar vehiculo" then
             ShootVehicleFromFreecam()
-        elseif selectedOptionName == "Delete Vehicle" then
+        elseif selectedOptionName == "Eliminar vehiculo" then
             deleteVehicle()
-        elseif selectedOptionName == "Kick From Vehicle" then
+        elseif selectedOptionName == "Expulsar" then
             kickFromVehicle()
-        elseif selectedOptionName == "Real Explosion" then
+        elseif selectedOptionName == "Explosion real" then
             realExplosion()
-        elseif selectedOptionName == "Silent Explosion" then
+        elseif selectedOptionName == "Explosion silenciosa" then
             silentExplosion()
         end
         last_click_time = current_time
@@ -7443,7 +7433,7 @@ local function ToggleFreecam(enable, speed)
     end
 end
 
-Actions.freecamItem = FindItem("Player", "Movement", "Freecam")
+Actions.freecamItem = FindItem("Jugador", "Movimiento", "Camara libre")
 if Actions.freecamItem then
     Actions.freecamItem.onClick = function(value)
         local speed = Actions.freecamItem.sliderValue or 0.5
@@ -7482,7 +7472,7 @@ Citizen.CreateThread(function()
 end)
 
                     do
-                        Actions.shootEyesItem = FindItem("Combat", "General", "Shoot Eyes")
+                        Actions.shootEyesItem = FindItem("Combate", "General", "Disparar ojos")
                         if Actions.shootEyesItem then
                             Actions.shootEyesItem.onClick = function(value)
                                 Menu.shooteyesEnabled = value
@@ -7491,7 +7481,7 @@ end)
                     end
 
                     do
-                        Actions.superPunchItem = FindItem("Combat", "General", "Super Punch")
+                        Actions.superPunchItem = FindItem("Combate", "General", "Super punetazo")
                         if Actions.superPunchItem then
                             Actions.superPunchItem.onClick = function(value)
                                 Menu.superPunchEnabled = value
@@ -7514,16 +7504,16 @@ end)
 
                     do
                         local weaponOptions = {
-                            {name = "give weapon_aa", weapon = "weapon_aa"},
-                            {name = "give weapon_caveira", weapon = "weapon_caveira"},
-                            {name = "give weapon_SCOM", weapon = "weapon_SCOM"},
-                            {name = "give weapon_mcx", weapon = "weapon_mcx"},
-                            {name = "give weapon_grau", weapon = "weapon_grau"},
-                            {name = "give weapon_midasgun", weapon = "weapon_midasgun"},
-                            {name = "give weapon_hackingdevice", weapon = "weapon_hackingdevice"},
-                            {name = "give weapon_akorus", weapon = "weapon_akorus"},
-                            {name = "give WEAPON_MIDGARD", weapon = "WEAPON_MIDGARD"},
-                            {name = "give weapon_chainsaw", weapon = "weapon_chainsaw"}
+                            {name = "dar arma_aa", weapon = "weapon_aa"},
+                            {name = "dar arma_caveira", weapon = "weapon_caveira"},
+                            {name = "dar arma_SCOM", weapon = "weapon_SCOM"},
+                            {name = "dar arma_mcx", weapon = "weapon_mcx"},
+                            {name = "dar arma_grau", weapon = "weapon_grau"},
+                            {name = "dar arma_midasgun", weapon = "weapon_midasgun"},
+                            {name = "dar arma_hackingdevice", weapon = "weapon_hackingdevice"},
+                            {name = "dar arma_akorus", weapon = "weapon_akorus"},
+                            {name = "dar WEAPON_MIDGARD", weapon = "WEAPON_MIDGARD"},
+                            {name = "dar motosierra", weapon = "weapon_chainsaw"}
                         }
 
                         local weaponHashMap = {
@@ -7735,7 +7725,7 @@ end)
                         end
 
                         for _, weaponData in ipairs(weaponOptions) do
-                            local weaponItem = FindItem("Combat", "Spawn", weaponData.name)
+                            local weaponItem = FindItem("Combate", "Spawnear", weaponData.name)
                             if weaponItem then
                                 weaponItem.onClick = function(value)
                                     if value then
@@ -7751,7 +7741,7 @@ end)
                         end
                     end
 
-                    Actions.protectWeaponItem = FindItem("Combat", "Spawn", "Protect Weapon")
+                    Actions.protectWeaponItem = FindItem("Combate", "Spawnear", "Proteger arma")
                     if Actions.protectWeaponItem then
                         Actions.protectWeaponItem.onClick = function(value)
                             if value then
@@ -7907,7 +7897,7 @@ end)
                     end)
 
                     do
-                        Actions.silentAimItem = FindItem("Combat", "General", "Silent Aim")
+                        Actions.silentAimItem = FindItem("Combate", "General", "Apunta silencioso")
                         if Actions.silentAimItem then
                             Actions.silentAimItem.onClick = function(value)
                                 Menu.silentAimEnabled = value
@@ -7963,7 +7953,7 @@ end)
                             end
                     end)
 
-                    Actions.magicBulletItem = FindItem("Combat", "General", "Magic Bullet")
+                    Actions.magicBulletItem = FindItem("Combate", "General", "Bala magica")
                     if Actions.magicBulletItem then
                         Actions.magicBulletItem.onClick = function(value)
                             Menu.magicbulletEnabled = value
@@ -8073,7 +8063,7 @@ end)
                         end
                     end)
 
-                    Actions.rapidFireItem = FindItem("Combat", "General", "Rapid Fire")
+                    Actions.rapidFireItem = FindItem("Combate", "General", "Disparo rapido")
                     if Actions.rapidFireItem then
                         Actions.rapidFireItem.onClick = function(value)
                             Menu.rapidFireEnabled = value
@@ -8144,7 +8134,7 @@ end)
                         end
                     end
 
-                    Actions.infiniteAmmoItem = FindItem("Combat", "General", "Infinite Ammo")
+                    Actions.infiniteAmmoItem = FindItem("Combate", "General", "Municion infinita")
                     if Actions.infiniteAmmoItem then
                         Actions.infiniteAmmoItem.onClick = function(value)
                             Menu.infiniteAmmoEnabled = value
@@ -8175,7 +8165,7 @@ end)
                         end
                     end
 
-                    Actions.noSpreadItem = FindItem("Combat", "General", "No Spread")
+                    Actions.noSpreadItem = FindItem("Combate", "General", "Sin dispersion")
                     if Actions.noSpreadItem then
                         Actions.noSpreadItem.onClick = function(value)
                             Menu.noSpreadEnabled = value
@@ -8214,14 +8204,14 @@ end)
                         end
                     end
 
-                    Actions.noRecoilItem = FindItem("Combat", "General", "No Recoil")
+                    Actions.noRecoilItem = FindItem("Combate", "General", "Sin retroceso")
                     if Actions.noRecoilItem then
                         Actions.noRecoilItem.onClick = function(value)
                             Menu.noRecoilEnabled = value
                         end
                     end
 
-                    Actions.giveAmmoItem = FindItem("Combat", "General", "Give Ammo")
+                    Actions.giveAmmoItem = FindItem("Combate", "General", "Dar municion")
                     if Actions.giveAmmoItem then
                         Actions.giveAmmoItem.onClick = function()
                             if type(Susano) == "table" and type(Susano.InjectResource) == "function" then
@@ -8247,7 +8237,7 @@ end)
                         end
                     end
 
-                    Actions.giveAllAttachmentItem = FindItem("Combat", "General", "Give all attachment")
+                    Actions.giveAllAttachmentItem = FindItem("Combate", "General", "Dar todos los accesorios")
                     if Actions.giveAllAttachmentItem then
                         Actions.giveAllAttachmentItem.onClick = function()
                             if type(Susano) == "table" and type(Susano.InjectResource) == "function" then
@@ -8283,7 +8273,7 @@ end)
                         end
                     end
 
-                    Actions.giveSuppressorItem = FindItem("Combat", "General", "Give suppressor")
+                    Actions.giveSuppressorItem = FindItem("Combate", "General", "Dar silenciador")
                     if Actions.giveSuppressorItem then
                         Actions.giveSuppressorItem.onClick = function()
                             if type(Susano) == "table" and type(Susano.InjectResource) == "function" then
@@ -8312,7 +8302,7 @@ end)
                         end
                     end
 
-                    Actions.giveFlashlightItem = FindItem("Combat", "General", "Give flashlight")
+                    Actions.giveFlashlightItem = FindItem("Combate", "General", "Dar linterna")
                     if Actions.giveFlashlightItem then
                         Actions.giveFlashlightItem.onClick = function()
                             if type(Susano) == "table" and type(Susano.InjectResource) == "function" then
@@ -8339,7 +8329,7 @@ end)
                         end
                     end
 
-                    Actions.giveGripItem = FindItem("Combat", "General", "Give grip")
+                    Actions.giveGripItem = FindItem("Combate", "General", "Dar agarre")
                     if Actions.giveGripItem then
                         Actions.giveGripItem.onClick = function()
                             if type(Susano) == "table" and type(Susano.InjectResource) == "function" then
@@ -8364,7 +8354,7 @@ end)
                         end
                     end
 
-                    Actions.giveScopeItem = FindItem("Combat", "General", "Give scope")
+                    Actions.giveScopeItem = FindItem("Combate", "General", "Dar mira")
                     if Actions.giveScopeItem then
                         Actions.giveScopeItem.onClick = function()
                             if type(Susano) == "table" and type(Susano.InjectResource) == "function" then
@@ -8395,7 +8385,7 @@ end)
                         end
                     end
 
-                    Actions.noReloadItem = FindItem("Combat", "General", "No Reload")
+                    Actions.noReloadItem = FindItem("Combate", "General", "Sin recarga")
                     if Actions.noReloadItem then
                         Actions.noReloadItem.onClick = function(value)
                             Menu.noReloadEnabled = value
@@ -9149,14 +9139,14 @@ end
     end
 end
 
-Actions.copyAppearanceItem = FindItem("Online", "Troll", "Copy Appearance")
+Actions.copyAppearanceItem = FindItem("En linea", "Troleo", "Copiar apariencia")
 if Actions.copyAppearanceItem then
     Actions.copyAppearanceItem.onClick = function()
         Menu.ActionCopyAppearance()
     end
 end
 
-Actions.banPlayerItem = FindItem("Online", "Troll", "Ban Player (test)")
+Actions.banPlayerItem = FindItem("En linea", "Troleo", "Banear jugador (prueba)")
 if Actions.banPlayerItem then
     Actions.banPlayerItem.onClick = function(value)
         banPlayerActive = value
@@ -9217,7 +9207,7 @@ if Actions.banPlayerItem then
                 local myPed = PlayerPedId()
                 if myPed then
                     ClearPedTasksImmediately(myPed)
-                    if originalCoords then
+                                        if originalCoords then
                         SetEntityCoords(myPed, originalCoords.x, originalCoords.y, originalCoords.z + 1.0, false, false, false, false)
                         Wait(100)
                         SetEntityCoords(myPed, originalCoords.x, originalCoords.y, originalCoords.z, false, false, false, false)
@@ -9234,21 +9224,21 @@ if Actions.banPlayerItem then
     end
 end
 
-Actions.shootPlayerItem = FindItem("Online", "Troll", "Shoot Player")
+Actions.shootPlayerItem = FindItem("En linea", "Troleo", "Disparar a jugador")
 if Actions.shootPlayerItem then
     Actions.shootPlayerItem.onClick = function()
         Menu.ActionShootPlayer()
     end
 end
 
-Actions.launchAllItem = FindItem("Online", "all", "Launch All")
+Actions.launchAllItem = FindItem("En linea", "todos", "Lanzar todos")
 if Actions.launchAllItem then
     Actions.launchAllItem.onClick = function()
         Menu.ActionLaunchAll()
     end
 end
 
-                    Actions.blackHoleItem = FindItem("Online", "Troll", "Black Hole")
+                    Actions.blackHoleItem = FindItem("En linea", "Troleo", "Agujero negro")
                     if Actions.blackHoleItem then
                         Actions.blackHoleItem.onClick = function(value)
                             if value then
@@ -9271,7 +9261,7 @@ end
                         end
                     end
 
-                    Actions.twerkOnThemItem = FindItem("Online", "Troll", "twerk")
+                    Actions.twerkOnThemItem = FindItem("En linea", "Troleo", "twerk")
                     if Actions.twerkOnThemItem then
                         Actions.twerkOnThemItem.onClick = function(value)
                             if not Menu.SelectedPlayer then
@@ -9320,7 +9310,7 @@ end
                         end
                     end
 
-                    Actions.backshotsItem = FindItem("Online", "Troll", "baise le")
+                    Actions.backshotsItem = FindItem("En linea", "Troleo", "follar")
                     if Actions.backshotsItem then
                         Actions.backshotsItem.onClick = function(value)
                             if not Menu.SelectedPlayer then
@@ -9369,7 +9359,7 @@ end
                         end
                     end
 
-                    Actions.wankOnThemItem = FindItem("Online", "Troll", "branlette")
+                    Actions.wankOnThemItem = FindItem("En linea", "Troleo", "paja")
                     if Actions.wankOnThemItem then
                         Actions.wankOnThemItem.onClick = function(value)
                             if value then
@@ -9461,7 +9451,7 @@ end
                         end
                     end
 
-                    Actions.piggybackItem = FindItem("Online", "Troll", "piggyback")
+                    Actions.piggybackItem = FindItem("En linea", "Troleo", "caballito")
                     if Actions.piggybackItem then
                         Actions.piggybackItem.onClick = function(value)
                             if not Menu.SelectedPlayer then
@@ -9563,7 +9553,7 @@ function Menu.ActionBugPlayer()
                         Wait(5)
                     end
                 end)
-            elseif bugPlayerMode == "launch" then
+            elseif bugPlayerMode == "lanzar" then
                 CreateThread(function()
                     local clientId = GetPlayerFromServerId(targetServerId)
                     if not clientId or clientId == -1 then
@@ -9636,7 +9626,7 @@ function Menu.ActionBugPlayer()
                         SetEntityVisible(myPed, true, 0)
                     end
                 end)
-            elseif bugPlayerMode == "hard launch" then
+            elseif bugPlayerMode == "lanzar fuerte" then
                 CreateThread(function()
                     local clientId = GetPlayerFromServerId(targetServerId)
                     if not clientId or clientId == -1 then
@@ -9715,7 +9705,7 @@ function Menu.ActionBugPlayer()
                         SetEntityVisible(myPed, true, 0)
                     end
                 end)
-            elseif bugPlayerMode == "attach" then
+            elseif bugPlayerMode == "enganchar" then
                 CreateThread(function()
                     local function reqCtrl(entity)
                         if not entity or entity == 0 then return false end
@@ -10062,15 +10052,15 @@ function Menu.ActionDropVehicle()
     end
 end
 
-                    Menu.CrushMode = "Rain"
+                    Menu.CrushMode = "Lluvia"
 
                     function Menu.ActionCrush()
-                        local crushMode = Menu.CrushMode or "Rain"
-                        if crushMode == "Rain" then
+                        local crushMode = Menu.CrushMode or "Lluvia"
+                        if crushMode == "Lluvia" then
                             Menu.ActionRainVehicle()
-                        elseif crushMode == "Drop" then
+                        elseif crushMode == "Caida" then
                             Menu.ActionDropVehicle()
-                        elseif crushMode == "Ram" then
+                        elseif crushMode == "Embestir" then
                             Menu.ActionRamPlayer()
                         end
                     end
@@ -10273,7 +10263,7 @@ end)
                         end
                     end
 
-Actions.attachPlayerItem = FindItem("Online", "Troll", "Attach Player")
+Actions.attachPlayerItem = FindItem("En linea", "Troleo", "Enganchar jugador")
 if Actions.attachPlayerItem then
     Actions.attachPlayerItem.onClick = function(value)
         Menu.attachPlayerEnabled = value
@@ -10868,24 +10858,24 @@ end)
     end
 end
 
-                    Menu.GiveMode = "Vehicle"
+                    Menu.GiveMode = "Vehiculo"
 
                     function Menu.ActionGive()
-                        local giveMode = Menu.GiveMode or "Vehicle"
-                        if giveMode == "Vehicle" then
+                        local giveMode = Menu.GiveMode or "Vehiculo"
+                        if giveMode == "Vehiculo" then
                             Menu.ActionGiveVehicle()
-                        elseif giveMode == "Ramp" then
+                        elseif giveMode == "Rampa" then
                             Menu.ActionGiveRamp()
                         end
                     end
 
-Menu.TPLocation = "ocean"
+Menu.TPLocation = "oceano"
 
 function Menu.ActionTPTo()
     if not Menu.SelectedPlayer then return end
 
     local targetServerId = Menu.SelectedPlayer
-    local tpLocation = Menu.TPLocation or "ocean"
+    local tpLocation = Menu.TPLocation or "oceano"
 
     if type(Susano) == "table" and type(Susano.InjectResource) == "function" then
         local code = string.format([[
@@ -10919,9 +10909,9 @@ if not DoesEntityExist(targetVehicle) then
 end
 
 local locations = {
-    ocean = {coords = vector3(-3000.0, -3000.0, 0.0), name = "Ocean"},
+    oceano = {coords = vector3(-3000.0, -3000.0, 0.0), name = "Oceano"},
     mazebank = {coords = vector3(-75.0, -818.0, 326.0), name = "Maze Bank"},
-    sandyshores = {coords = vector3(1960.0, 3740.0, 32.0), name = "Sandy Shores"}
+    ["sandy shores"] = {coords = vector3(1960.0, 3740.0, 32.0), name = "Sandy Shores"}
 }
 
 local destCoords = locations[tpLocation].coords
@@ -11361,13 +11351,13 @@ end)
     end
 end
 
-                    Menu.WarpMode = "Classic"
+                    Menu.WarpMode = "Clasico"
 
                     function Menu.ActionWarp()
-                        local warpMode = Menu.WarpMode or "Classic"
-                        if warpMode == "Classic" then
+                        local warpMode = Menu.WarpMode or "Clasico"
+                        if warpMode == "Clasico" then
                             Menu.ActionWarpVehicle()
-                        elseif warpMode == "Boost" then
+                        elseif warpMode == "Aceleron" then
                             Menu.ActionWarpBoost()
                         end
                     end
@@ -11948,7 +11938,7 @@ end)
 end
 
 do
-    Actions.bugPlayerItem = FindItem("Online", "Troll", "Bug Player")
+    Actions.bugPlayerItem = FindItem("En linea", "Troleo", "Bug al jugador")
     if Actions.bugPlayerItem then
         Actions.bugPlayerItem.onClick = function(index, option)
             Menu.BugPlayerMode = option
@@ -11956,21 +11946,21 @@ do
     end
 end
 
-    Actions.cagePlayerItem = FindItem("Online", "Troll", "Cage Player")
+    Actions.cagePlayerItem = FindItem("En linea", "Troleo", "Enjaular jugador")
     if Actions.cagePlayerItem then
         Actions.cagePlayerItem.onClick = function()
             Menu.ActionCagePlayer()
         end
     end
 
-    Actions.ramPlayerItem = FindItem("Online", "Troll", "Ram Player")
+    Actions.ramPlayerItem = FindItem("En linea", "Troleo", "Embestir")
     if Actions.ramPlayerItem then
         Actions.ramPlayerItem.onClick = function()
             Menu.ActionRamPlayer()
         end
     end
 
-    Actions.crushItem = FindItem("Online", "Troll", "Crush")
+    Actions.crushItem = FindItem("En linea", "Troleo", "Aplastar")
     if Actions.crushItem then
         Actions.crushItem.onClick = function(index, option)
                             Menu.CrushMode = option
@@ -11978,7 +11968,7 @@ end
     end
 end
 
-    Actions.bugVehicleItem = FindItem("Online", "Vehicle", "Bug Vehicle")
+    Actions.bugVehicleItem = FindItem("En linea", "Vehiculo", "Bug vehiculo")
     if Actions.bugVehicleItem then
         Actions.bugVehicleItem.onClick = function(index, option)
         if option then
@@ -11988,7 +11978,7 @@ end
     end
 end
 
-    Actions.warpItem = FindItem("Online", "Vehicle", "Warp")
+    Actions.warpItem = FindItem("En linea", "Vehiculo", "Warp")
     if Actions.warpItem then
         Actions.warpItem.onClick = function(index, option)
                             Menu.WarpMode = option
@@ -11996,35 +11986,35 @@ end
     end
 end
 
-    Actions.remoteVehicleItem = FindItem("Online", "Vehicle", "Remote Vehicle")
+    Actions.remoteVehicleItem = FindItem("En linea", "Vehiculo", "Control remoto")
     if Actions.remoteVehicleItem then
         Actions.remoteVehicleItem.onClick = function()
             Menu.ActionRemoteVehicle()
     end
 end
 
-    Actions.stealVehicleItem = FindItem("Online", "Vehicle", "Steal Vehicle")
+    Actions.stealVehicleItem = FindItem("En linea", "Vehiculo", "Robar vehiculo")
     if Actions.stealVehicleItem then
         Actions.stealVehicleItem.onClick = function()
             Menu.ActionStealVehicle()
     end
 end
 
-    Actions.npcDriveItem = FindItem("Online", "Vehicle", "NPC Drive")
+    Actions.npcDriveItem = FindItem("En linea", "Vehiculo", "Conducir NPC")
     if Actions.npcDriveItem then
         Actions.npcDriveItem.onClick = function()
             Menu.ActionNPCDrive()
         end
     end
 
-    Actions.deleteVehicleItem = FindItem("Online", "Vehicle", "Delete Vehicle")
+    Actions.deleteVehicleItem = FindItem("En linea", "Vehiculo", "Eliminar vehiculo")
     if Actions.deleteVehicleItem then
         Actions.deleteVehicleItem.onClick = function()
             Menu.ActionDeleteVehicle()
         end
     end
 
-    Actions.kickVehicleItem = FindItem("Online", "Vehicle", "Kick Vehicle")
+    Actions.kickVehicleItem = FindItem("En linea", "Vehiculo", "Expulsar")
     if Actions.kickVehicleItem then
         Actions.kickVehicleItem.onClick = function(index, option)
         if option then
@@ -12034,14 +12024,14 @@ end
     end
 end
 
-    Actions.removeAllTiresItem = FindItem("Online", "Vehicle", "remove all tires")
+    Actions.removeAllTiresItem = FindItem("En linea", "Vehiculo", "quitar todas las ruedas")
     if Actions.removeAllTiresItem then
         Actions.removeAllTiresItem.onClick = function()
             Menu.ActionRemoveAllTires()
         end
     end
 
-    Actions.giveItem = FindItem("Online", "Vehicle", "Give")
+    Actions.giveItem = FindItem("En linea", "Vehiculo", "Regalar")
     if Actions.giveItem then
         Actions.giveItem.onClick = function(index, option)
                             Menu.GiveMode = option
@@ -12049,7 +12039,7 @@ end
     end
 end
 
-    Actions.tpToItem = FindItem("Online", "Vehicle", "TP to")
+    Actions.tpToItem = FindItem("En linea", "Vehiculo", "TP a")
     if Actions.tpToItem then
         Actions.tpToItem.onClick = function(index, option)
         if option then
@@ -12069,7 +12059,7 @@ CreateThread(function()
     local attempts = 0
     while not found and attempts < 50 do
         for _, cat in ipairs(Menu.Categories) do
-            if cat.name == "Miscellaneous" then
+            if cat.name == "Varios" then
                 found = true
                 break
             end
@@ -12087,7 +12077,7 @@ CreateThread(function()
     Wait(500)
 
     for _, cat in ipairs(Menu.Categories) do
-        if cat.name == "Miscellaneous" and cat.tabs then
+        if cat.name == "Varios" and cat.tabs then
             for _, tab in ipairs(cat.tabs) do
                 if tab.name == "Bypasses" and tab.items then
                     for _, item in ipairs(tab.items) do
@@ -12100,7 +12090,7 @@ CreateThread(function()
         end
     end
 
-    Actions.testItem = FindItem("Miscellaneous", "Bypasses", "Bypass Putin")
+    Actions.testItem = FindItem("Varios", "Bypasses", "Bypass Putin")
     if Actions.testItem then
         Actions.testItem.onClick = function()
             local targetResource = "Putin"
@@ -12379,27 +12369,27 @@ end
 end)
 
 do
-    local tpSelector = FindItem("Miscellaneous", "General", "Teleport To")
+    local tpSelector = FindItem("Varios", "General", "Teletransportar a")
 
     if tpSelector then
         tpSelector.onClick = function(index, option)
-            if option == "Waypoint" then
+            if option == "Punto de ruta" then
                 Menu.ActionTPToWaypoint()
-            elseif option == "FIB Building" then
+            elseif option == "Edificio FIB" then
                 Menu.ActionTPToFIB()
-            elseif option == "Mission Row PD" then
+            elseif option == "Comisaria de Mission Row" then
                 Menu.ActionTPToMissionRowPD()
-            elseif option == "Pillbox Hospital" then
+            elseif option == "Hospital Pillbox" then
                 Menu.ActionTPToPillboxHospital()
-            elseif option == "Grove Street" then
+            elseif option == "Calle Grove" then
                 Menu.ActionTPToGroveStreet()
-            elseif option == "Legion Square" then
+            elseif option == "Plaza Legion" then
                 Menu.ActionTPToLegionSquare()
             end
     end
 end
 
-    Actions.staffModeItem = FindItem("Miscellaneous", "General", "Staff Mode")
+    Actions.staffModeItem = FindItem("Varios", "General", "Modo staff")
     if Actions.staffModeItem then
         Actions.staffModeItem.onClick = function(value)
             Menu.StaffModeEnabled = value
@@ -12437,12 +12427,12 @@ end
 
                                                 if Menu.Visible then
                                                     for i, cat in ipairs(Menu.Categories) do
-                                                        if cat.name == "Online" then
+                                                        if cat.name == "En linea" then
                                                             Menu.CurrentCategory = i
                                                             Menu.OpenedCategory = i
                                                             if cat.hasTabs then
                                                                 for j, tab in ipairs(cat.tabs) do
-                                                                    if tab.name == "Troll" then
+                                                                    if tab.name == "Troleo" then
                                                                         Menu.CurrentTab = j
                                                                         break
                                                                     end
@@ -12454,12 +12444,12 @@ end
                                                 else
                                                     Menu.Visible = true
                                                     for i, cat in ipairs(Menu.Categories) do
-                                                        if cat.name == "Online" then
+                                                        if cat.name == "En linea" then
                                                             Menu.CurrentCategory = i
                                                             Menu.OpenedCategory = i
                                                             if cat.hasTabs then
                                                                 for j, tab in ipairs(cat.tabs) do
-                                                                    if tab.name == "Troll" then
+                                                                    if tab.name == "Troleo" then
                                                                         Menu.CurrentTab = j
                                                                         break
                                                                     end
@@ -12482,7 +12472,7 @@ end
         end
     end
 
-    Actions.disableWeaponDamageItem = FindItem("Miscellaneous", "General", "Disable Weapon Damage")
+    Actions.disableWeaponDamageItem = FindItem("Varios", "General", "Desactivar dano de armas")
     if Actions.disableWeaponDamageItem then
         Actions.disableWeaponDamageItem.onClick = function(value)
             Menu.DisableWeaponDamage = value
@@ -12510,7 +12500,7 @@ end
         end
     end
 
-    Actions.killAllPedsItem = FindItem("Miscellaneous", "General", "Kill All Peds")
+    Actions.killAllPedsItem = FindItem("Varios", "General", "Matar todos los peds")
     if Actions.killAllPedsItem then
         Actions.killAllPedsItem.onClick = function(value)
             Menu.KillAllPeds = value
@@ -12579,7 +12569,7 @@ end
         end
     end
 
-Actions.launchOnTargetItem = FindItem("Miscellaneous", "General", "Launch on Target")
+Actions.launchOnTargetItem = FindItem("Varios", "General", "Lanzar sobre objetivo")
 if Actions.launchOnTargetItem then
     local launchOnTargetKey = nil
     local launchOnTargetEnabled = false
@@ -12602,7 +12592,7 @@ if Actions.launchOnTargetItem then
         
         if value then
             if Menu and Menu.OpenInput then
-                Menu.OpenInput("Launch on Target", "Entrez la touche (E, F, X, B, V, etc.)", function(input)
+                Menu.OpenInput("Lanzar sobre objetivo", "Introduce la tecla (E, F, X, B, V, etc.)", function(input)
                     if input and input ~= "" then
                         local keyUpper = input:upper()
                         
@@ -12610,11 +12600,11 @@ if Actions.launchOnTargetItem then
                             launchOnTargetKey = keyNameToCode[keyUpper]
                             
                             if type(Susano) == "table" and type(Susano.ShowNotification) == "function" then
-                                Susano.ShowNotification("~g~Touche enregistree !~s~\nTouche: " .. keyUpper)
+                                Susano.ShowNotification("~g~¡Tecla registrada!~s~\nTecla: " .. keyUpper)
                             end
                         else
                             if type(Susano) == "table" and type(Susano.ShowNotification) == "function" then
-                                Susano.ShowNotification("~r~Erreur !~s~\nTouche invalide: " .. input)
+                                Susano.ShowNotification("~r~¡Error!~s~\nTecla invalida: " .. input)
                             end
                             
                             launchOnTargetEnabled = false
@@ -12756,7 +12746,7 @@ if Actions.launchOnTargetItem then
     end)
 end
 
-    Actions.menuStaffItem = FindItem("Miscellaneous", "Exploits", "Menu Staff")
+    Actions.menuStaffItem = FindItem("Varios", "Exploits", "Menu staff")
     if Actions.menuStaffItem then
         Actions.menuStaffItem.onClick = function()
             local targetResource = "Putin"
@@ -12796,11 +12786,11 @@ end
         end
     end
 
-    Actions.reviveItem = FindItem("Miscellaneous", "Exploits", "Revive")
+    Actions.reviveItem = FindItem("Varios", "Exploits", "Revivir")
     if Actions.reviveItem then
         Actions.reviveItem.onClick = function()
             if Menu and Menu.OpenInput then
-                Menu.OpenInput("Confirmation", "Booboo ?", function(input)
+                Menu.OpenInput("Confirmacion", "Booboo ?", function(input)
                     if input and string.lower(input) == "oui" then
                         if type(Susano) == "table" and type(Susano.InjectResource) == "function" then
                             Susano.InjectResource("Putin", [[
@@ -12918,12 +12908,12 @@ end
 
     local function ApplyConfig(config)
         if not config or type(config) ~= "table" then
-            print("ApplyConfig: Invalid config parameter")
+            print("ApplyConfig: parametro de configuracion invalido")
             return
         end
 
         if not Menu then
-            print("ApplyConfig: Menu not available")
+            print("ApplyConfig: menu no disponible")
             return
         end
 
@@ -12931,7 +12921,7 @@ end
 
         for key, data in pairs(config) do
             if not key or type(key) ~= "string" then
-                print("ApplyConfig: Skipping invalid key: " .. tostring(key))
+                print("ApplyConfig: omitiendo clave invalida: " .. tostring(key))
             else
                 local success, err = pcall(function()
                     if string.find(key, "|") then
@@ -13100,7 +13090,7 @@ end
                         Menu.ApplyTheme(themeValue)
                         
                         
-                        local menuThemeItem = FindItem("Settings", "General", "Menu Theme")
+                        local menuThemeItem = FindItem("Ajustes", "General", "Tema del menu")
                         if menuThemeItem and menuThemeItem.options then
                             local themeIndex = nil
                             for i, option in ipairs(menuThemeItem.options) do
@@ -13118,7 +13108,7 @@ end
                 end)
 
                 if not success then
-                    print("Error applying config for key: " .. tostring(key) .. " - " .. tostring(err))
+                    print("Error al aplicar configuracion para clave: " .. tostring(key) .. " - " .. tostring(err))
                 end
             end
         end
@@ -13138,14 +13128,14 @@ end
             end)
         end
 
-        print("[Config Load] Config values restored. Please click on options in menu to activate them.")
+        print("[Cargar Configuracion] Valores de configuracion restaurados. Haz clic en las opciones del menu para activarlas.")
     end
 
-    Actions.createConfigItem = FindItem("Settings", "Config", "Create Config")
+    Actions.createConfigItem = FindItem("Ajustes", "Configuracion", "Crear configuracion")
     if Actions.createConfigItem then
         Actions.createConfigItem.onClick = function()
             if Menu and Menu.OpenInput then
-                Menu.OpenInput("Create Config", "Enter a code for your config:", function(code)
+                Menu.OpenInput("Crear configuracion", "Introduce un codigo para tu configuracion:", function(code)
                     if not code or code == "" then return end
 
                     code = string.lower(string.gsub(code, "%s+", ""))
@@ -13174,12 +13164,12 @@ end
 
                             else
                                 if Menu and Menu.OpenInput then
-                                    Menu.OpenInput("Error", "Failed to save config. Status: " .. tostring(status), function() end)
+                                    Menu.OpenInput("Error", "Fallo al guardar la configuracion. Estado: " .. tostring(status), function() end)
                                 end
                             end
                         else
                             if Menu and Menu.OpenInput then
-                                Menu.OpenInput("Error", "HTTP functions not available", function() end)
+                                Menu.OpenInput("Error", "Funciones HTTP no disponibles", function() end)
                             end
                         end
                     end)
@@ -13188,11 +13178,11 @@ end
         end
     end
 
-    Actions.loadConfigItem = FindItem("Settings", "Config", "Load Config")
+    Actions.loadConfigItem = FindItem("Ajustes", "Configuracion", "Cargar configuracion")
     if Actions.loadConfigItem then
         Actions.loadConfigItem.onClick = function()
             if Menu and Menu.OpenInput then
-                Menu.OpenInput("Load Config", "Enter config code:", function(code)
+                Menu.OpenInput("Cargar configuracion", "Introduce el codigo de la configuracion:", function(code)
                     if not code or code == "" then return end
 
                     code = string.lower(string.gsub(code, "%s+", ""))
@@ -13231,7 +13221,7 @@ end
 
                                         if not Menu or not Menu.Categories then
                                             if Menu and Menu.OpenInput then
-                                                Menu.OpenInput("Error", "Menu not ready. Please try again.", function() end)
+                                                Menu.OpenInput("Error", "Menu no listo. Por favor, intentelo de nuevo.", function() end)
                                             end
                                             return
                                         end
@@ -13243,30 +13233,30 @@ end
                                         if applySuccess then
 
                                         else
-                                            print("ApplyConfig error: " .. tostring(applyErr))
+                                            print("Error en ApplyConfig: " .. tostring(applyErr))
                                             if Menu and Menu.OpenInput then
-                                                Menu.OpenInput("Error", "Failed to apply config: " .. tostring(applyErr), function() end)
+                                                Menu.OpenInput("Error", "Fallo al aplicar la configuracion: " .. tostring(applyErr), function() end)
                                             end
                                         end
                                     else
-                                        print("Invalid config format. Type: " .. type(configToApply))
+                                        print("Formato de configuracion invalido. Tipo: " .. type(configToApply))
                                         if Menu and Menu.OpenInput then
-                                            Menu.OpenInput("Error", "Invalid config format", function() end)
+                                            Menu.OpenInput("Error", "Formato de configuracion invalido", function() end)
                                         end
                                     end
                                 else
-                                    print("Parse error: " .. tostring(parseErr) .. " | Response: " .. tostring(string.sub(response or "", 1, 100)))
+                                    print("Error de parseo: " .. tostring(parseErr) .. " | Respuesta: " .. tostring(string.sub(response or "", 1, 100)))
                                     if Menu and Menu.OpenInput then
-                                        Menu.OpenInput("Error", "Failed to parse config: " .. tostring(parseErr or "Unknown error"), function() end)
+                                        Menu.OpenInput("Error", "Fallo al parsear la configuracion: " .. tostring(parseErr or "Error desconocido"), function() end)
                                     end
                                 end
                             elseif status == 404 then
                                 if Menu and Menu.OpenInput then
-                                    Menu.OpenInput("Error", "Config not found!", function() end)
+                                    Menu.OpenInput("Error", "¡Configuracion no encontrada!", function() end)
                                 end
                             else
                                 if Menu and Menu.OpenInput then
-                                    Menu.OpenInput("Error", "Failed to load config. Status: " .. tostring(status), function() end)
+                                    Menu.OpenInput("Error", "Fallo al cargar la configuracion. Estado: " .. tostring(status), function() end)
                                 end
                             end
                         end)
@@ -13314,13 +13304,13 @@ CreateThread(function()
         table.sort(temp, function(a, b) return a.dist < b.dist end)
         foundVehicles = temp
 
-        local radarSelector = FindItem("Vehicle", "Radar", "Select Vehicle")
+        local radarSelector = FindItem("Vehiculo", "Radar", "Seleccionar vehiculo")
         if radarSelector then
             local options = {}
             for _, vData in ipairs(foundVehicles) do
                 table.insert(options, vData.name .. " [" .. math.floor(vData.dist) .. "m]")
             end
-            if #options == 0 then options = {"Scanning..."} end
+            if #options == 0 then options = {"Escaneando..."} end
             radarSelector.options = options
             if radarSelector.selected > #options then radarSelector.selected = 1 end
         end
@@ -13346,7 +13336,7 @@ local function DrawText3D(x, y, z, text)
 end
 
 do
-    local item = FindItem("Vehicle", "Performance", "Give Nearest Vehicle")
+    local item = FindItem("Vehiculo", "Rendimiento", "Regalar vehiculo mas cercano")
     if item then
         item.onClick = function()
              local pPed = PlayerPedId()
@@ -13380,8 +13370,8 @@ end
 CreateThread(function()
     while true do
         Wait(0)
-        local selector = FindItem("Vehicle", "Radar", "Select Vehicle")
-        local highlightToggle = FindItem("Vehicle", "Radar", "Highlight Selected")
+        local selector = FindItem("Vehiculo", "Radar", "Seleccionar vehiculo")
+        local highlightToggle = FindItem("Vehiculo", "Radar", "Resaltar seleccionado")
         if selector and highlightToggle and highlightToggle.value and foundVehicles[selector.selected] then
             local vehicle = foundVehicles[selector.selected].entity
             if DoesEntityExist(vehicle) then
@@ -13533,7 +13523,7 @@ CreateThread(function()
     end
 end)
 
-Actions.keybindsPositionItem = FindItem("Settings", "Keybinds", "Keybinds Position")
+Actions.keybindsPositionItem = FindItem("Ajustes", "Teclas rapidas", "Posicion de teclas rapidas")
 if Actions.keybindsPositionItem then
     Actions.keybindsPositionItem.onClick = function(value)
         Menu.KeybindsPositionMode = value
@@ -13606,7 +13596,7 @@ CreateThread(function()
     end
 end)
 
-Actions.teleportVisionItem = FindItem("Miscellaneous", "General", "Teleport Vision")
+Actions.teleportVisionItem = FindItem("Varios", "General", "Vision teletransporte")
 if Actions.teleportVisionItem then
     local teleportVisionKey = nil
     local teleportVisionEnabled = false
@@ -13629,7 +13619,7 @@ if Actions.teleportVisionItem then
         
         if value then
             if Menu and Menu.OpenInput then
-                Menu.OpenInput("Teleport Vision", "(E, F, X, B, V, etc.)", function(input)
+                Menu.OpenInput("Vision teletransporte", "(E, F, X, B, V, etc.)", function(input)
                     if input and input ~= "" then
                         local keyUpper = input:upper()
                         
@@ -13637,11 +13627,11 @@ if Actions.teleportVisionItem then
                             teleportVisionKey = keyNameToCode[keyUpper]
                             
                             if type(Susano) == "table" and type(Susano.ShowNotification) == "function" then
-                                Susano.ShowNotification("~g~Touch registered !~s~\nTouche: " .. keyUpper)
+                                Susano.ShowNotification("~g~¡Tecla registrada!~s~\nTecla: " .. keyUpper)
                             end
                         else
                             if type(Susano) == "table" and type(Susano.ShowNotification) == "function" then
-                                Susano.ShowNotification("~r~Error !~s~\nTouch invalid: " .. input)
+                                Susano.ShowNotification("~r~¡Error!~s~\nTecla invalida: " .. input)
                             end
                             
                             teleportVisionEnabled = false
@@ -13778,7 +13768,7 @@ if Actions.teleportVisionItem then
 end
 
 
-Actions.teleportShootItem = FindItem("Miscellaneous", "General", "Teleport Shoot")
+Actions.teleportShootItem = FindItem("Varios", "General", "Disparo teletransporte")
 if Actions.teleportShootItem then
     local teleportShootEnabled = false
     
@@ -13787,7 +13777,7 @@ if Actions.teleportShootItem then
         
         if value then
             if type(Susano) == "table" and type(Susano.ShowNotification) == "function" then
-                Susano.ShowNotification("~g~Teleport Shoot Active~s~\nTirez pour vous teleporter !")
+                Susano.ShowNotification("~g~Disparo teletransporte activado~s~\n¡Dispara para teletransportarte!")
             end
         end
     end
@@ -13904,7 +13894,7 @@ if Actions.teleportShootItem then
 end
 
 
-Actions.teleportShootItem = FindItem("Miscellaneous", "General", "Teleport Shoot")
+Actions.teleportShootItem = FindItem("Varios", "General", "Disparo teletransporte")
 if Actions.teleportShootItem then
     local teleportShootEnabled = false
     
