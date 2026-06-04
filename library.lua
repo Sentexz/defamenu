@@ -263,14 +263,14 @@ function Menu.DrawHeader()
             
             Susano.DrawImage(Menu.bannerTexture, x, y, width, bannerHeight, 1, 1, 1, 1, 0)
         else
-            Menu.DrawRect(x, y, width, height, Menu.Colors.HeaderPink.r, Menu.Colors.HeaderPink.g, Menu.Colors.HeaderPink.b, 255)
+            Menu.DrawRect(x, y, width, height, 255, 0, 0, 255)  -- Rojo
 
             local logoX = x + width / 2 - 12
             local logoY = y + height / 2 - 20
             Menu.DrawText(logoX, logoY, "P", 44, 1.0, 1.0, 1.0, 1.0)
         end
     else
-        Menu.DrawRect(x, y, width, height, Menu.Colors.HeaderPink.r, Menu.Colors.HeaderPink.g, Menu.Colors.HeaderPink.b, 255)
+        Menu.DrawRect(x, y, width, height, 255, 0, 0, 255)  -- Rojo
 
         local logoX = x + width / 2 - 12
         local logoY = y + height / 2 - 20
