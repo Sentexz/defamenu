@@ -121,19 +121,20 @@ function Menu.LoadBannerTexture(url)
     end
 end
 
+-- CAMBIADO: Colores a ROJO
 Menu.Colors = {
-    HeaderPink = { r = 148, g = 0, b = 211 },
-    SelectedBg = { r = 148, g = 0, b = 211 },
+    HeaderPink = { r = 255, g = 0, b = 0 },
+    SelectedBg = { r = 255, g = 0, b = 0 },
     TextWhite = { r = 255, g = 255, b = 255 },
     BackgroundDark = { r = 0, g = 0, b = 0 },
     FooterBlack = { r = 0, g = 0, b = 0 }
 }
 
-Menu.CurrentTheme = "Purple"
+Menu.CurrentTheme = "Red"
 
 function Menu.ApplyTheme(themeName)
     if not themeName or type(themeName) ~= "string" then
-        themeName = "Purple"
+        themeName = "Red"
     end
     
 
@@ -161,10 +162,10 @@ function Menu.ApplyTheme(themeName)
         Menu.Banner.imageUrl = "https://i.imgur.com/H5jBxTQ.png"
         Menu.CurrentTheme = "pink"
     else
-        Menu.Colors.HeaderPink = { r = 148, g = 0, b = 211 }
-        Menu.Colors.SelectedBg = { r = 148, g = 0, b = 211 }
+        Menu.Colors.HeaderPink = { r = 255, g = 0, b = 0 }
+        Menu.Colors.SelectedBg = { r = 255, g = 0, b = 0 }
         Menu.Banner.imageUrl = "https://i.imgur.com/H5jBxTQ.png"
-        Menu.CurrentTheme = "Purple"
+        Menu.CurrentTheme = "Red"
     end
 
     if Menu.Banner.enabled and Menu.Banner.imageUrl then
@@ -263,14 +264,14 @@ function Menu.DrawHeader()
             
             Susano.DrawImage(Menu.bannerTexture, x, y, width, bannerHeight, 1, 1, 1, 1, 0)
         else
-            Menu.DrawRect(x, y, width, height, 255, 0, 0, 255)  -- Rojo
+            Menu.DrawRect(x, y, width, height, Menu.Colors.HeaderPink.r, Menu.Colors.HeaderPink.g, Menu.Colors.HeaderPink.b, 255)
 
             local logoX = x + width / 2 - 12
             local logoY = y + height / 2 - 20
             Menu.DrawText(logoX, logoY, "P", 44, 1.0, 1.0, 1.0, 1.0)
         end
     else
-        Menu.DrawRect(x, y, width, height, 255, 0, 0, 255)  -- Rojo
+        Menu.DrawRect(x, y, width, height, Menu.Colors.HeaderPink.r, Menu.Colors.HeaderPink.g, Menu.Colors.HeaderPink.b, 255)
 
         local logoX = x + width / 2 - 12
         local logoY = y + height / 2 - 20
@@ -3029,5 +3030,7 @@ if Menu.Banner.enabled and Menu.Banner.imageUrl then
     Menu.LoadBannerTexture(Menu.Banner.imageUrl)
 end
 
+-- Forzar el tema rojo al inicio (opcional, pero ya lo está por defecto)
+Menu.ApplyTheme("Red")
 
 return Menu
