@@ -1,5 +1,6 @@
 -- SUSANO MENU < MorsDier > https://discord.gg/zP8MaFP9uM
 -- Version en español (solo ASCII)
+-- CON FUNCIONES AÑADIDAS: Revive ESX/QB, spawn rampa, cargar/lanzar vehículos
 
 local LibraryURL = "https://raw.githubusercontent.com/Sentexz/defamenu/refs/heads/main/library.lua"
 
@@ -117,6 +118,115 @@ local function forcePedOutLocal(ped, vehicle)
         SetEntityCoords(ped, coords.x, coords.y, coords.z + 2.0, false, false, false, false)
     end
 end
+
+-- ========== NUEVAS FUNCIONES AÑADIDAS ==========
+
+-- Revive para servidores ESX
+local function revivirESX()
+    TriggerEvent('esx_ambulancejob:revive')
+    TriggerEvent('chat:addMessage', {args = {"~g~Reviviendo (ESX)"}})
+end
+
+-- Revive para servidores QB / QBCore / QBX
+local function revivirQB()
+    local ped = PlayerPedId()
+    if IsPedDeadOrDying(ped, true) then
+        TriggerEvent('hospital:client:Revive')
+        Citizen.Wait(100)
+        if IsPedDeadOrDying(ped, true) then
+            TriggerServerEvent('hospital:server:RevivePlayer', GetPlayerServerId(PlayerId()))
+        end
+        Citizen.Wait(100)
+        if exports['qbx_medical'] then
+            pcall(function() exports['qbx_medical']:RevivePlayer() end)
+        end
+        TriggerEvent('chat:addMessage', {args = {"~g~Intentando revivir (QB/QC)"}})
+    else
+        TriggerEvent('chat:addMessage', {args = {"~r~No estás muerto"}})
+    end
+end
+
+-- Spawnear rampa gigante (stunt block)
+local function spawnRampa()
+    local ped = PlayerPedId()
+    local pos = GetEntityCoords(ped)
+    local handle = StartShapeTestRay(pos.x, pos.y, pos.z+100.0, pos.x, pos.y, pos.z-100.0, -1, ped, 0)
+    local _, hit, hitPos = GetShapeTestResult(handle)
+    local groundZ = hit and hitPos.z or pos.z
+    local model = "stt_prop_stunt_bblock_huge_04"
+    RequestModel(model)
+    local timeout = 0
+    while not HasModelLoaded(model) and timeout < 100 do Citizen.Wait(10) timeout=timeout+1 end
+    if HasModelLoaded(model) then
+        local obj = CreateObject(GetHashKey(model), pos.x, pos.y, groundZ+1.0, true, true, false)
+        if obj and obj ~= 0 then
+            FreezeEntityPosition(obj, true)
+            TriggerEvent('chat:addMessage', {args = {"~g~Rampa gigante spawneada"}})
+        else
+            TriggerEvent('chat:addMessage', {args = {"~r~Error al spawnear rampa"}})
+        end
+        SetModelAsNoLongerNeeded(model)
+    end
+end
+
+-- Variables para cargar/lanzar vehículos
+local _vehCargado = nil
+local _cargando = false
+
+local function rotToDir(rot)
+    local adj = vec3((math.pi/180)*rot.x, (math.pi/180)*rot.y, (math.pi/180)*rot.z)
+    return vec3(-math.sin(adj.z)*math.abs(math.cos(adj.x)), math.cos(adj.z)*math.abs(math.cos(adj.x)), math.sin(adj.x))
+end
+
+local function cargarVehiculo()
+    local ped = PlayerPedId()
+    local camPos = GetGameplayCamCoord()
+    local camRot = GetGameplayCamRot(2)
+    local dir = rotToDir(camRot)
+    local dest = camPos + dir * 10.0
+    local ray = StartShapeTestRay(camPos.x, camPos.y, camPos.z, dest.x, dest.y, dest.z, -1, ped, 0)
+    local _, hit, _, _, ent = GetShapeTestResult(ray)
+    if hit == 1 and GetEntityType(ent) == 2 then
+        if _cargando then
+            TriggerEvent('chat:addMessage', {args = {"Ya estás cargando un vehículo"}})
+            return
+        end
+        _vehCargado = ent
+        _cargando = true
+        if not NetworkHasControlOfEntity(_vehCargado) then
+            NetworkRequestControlOfEntity(_vehCargado)
+            local t = 0
+            while not NetworkHasControlOfEntity(_vehCargado) and t < 20 do Citizen.Wait(50) t=t+1 end
+        end
+        FreezeEntityPosition(_vehCargado, true)
+        AttachEntityToEntity(_vehCargado, ped, GetPedBoneIndex(ped, 60309), 1.0, 0.5, 0.0, 0.0, 0.0, 0.0, true, true, false, false, 1, true)
+        RequestAnimDict('anim@mp_rollarcoaster')
+        while not HasAnimDictLoaded('anim@mp_rollarcoaster') do Citizen.Wait(10) end
+        TaskPlayAnim(ped, 'anim@mp_rollarcoaster', 'hands_up_idle_a_player_one', 8.0, -8.0, -1, 50, 0, false, false, false)
+        TriggerEvent('chat:addMessage', {args = {"~g~Vehículo cargado"}})
+    else
+        TriggerEvent('chat:addMessage', {args = {"~r~No estás mirando a ningún vehículo"}})
+    end
+end
+
+local function lanzarVehiculo()
+    if not _cargando or not _vehCargado then
+        TriggerEvent('chat:addMessage', {args = {"~r~No tienes ningún vehículo cargado"}})
+        return
+    end
+    local ped = PlayerPedId()
+    local camRot = GetGameplayCamRot(2)
+    local dir = rotToDir(camRot)
+    DetachEntity(_vehCargado, true, true)
+    FreezeEntityPosition(_vehCargado, false)
+    ApplyForceToEntity(_vehCargado, 1, dir.x * 50.0, dir.y * 50.0, dir.z * 50.0, 0.0, 0.0, 0.0, 0, false, true, true, false, true)
+    ClearPedTasks(ped)
+    TriggerEvent('chat:addMessage', {args = {"~y~Vehículo lanzado"}})
+    _vehCargado = nil
+    _cargando = false
+end
+
+-- ========== FIN NUEVAS FUNCIONES ==========
 
 local Bypass = {}
 
@@ -1548,7 +1658,9 @@ Menu.Categories = {
                 "Seashark", "Speeder", "Jetmax", "Toro", "Dinghy", "Dinghy 4-Seat", "Dinghy 2-Seat", "Marquis",
                 "Squalo", "Suntrap", "Tropic", "Tropic 2", "Predator", "Police Predator", "Rhib", "Submersible",
                 "Submersible 2", "Kraken", "Avisa", "Toro 2", "Longfin", "Patrol Boat", "Wastelander", "Cutter"
-            }, selected = 1 }
+            }, selected = 1 },
+            { name = "", isSeparator = true, separatorText = "Nuevo" },
+            { name = "Spawnear rampa", type = "action", onClick = spawnRampa }
         }},
         { name = "Rendimiento", items = {
             { name = "", isSeparator = true, separatorText = "Warp" },
@@ -1578,7 +1690,10 @@ Menu.Categories = {
             { name = "", isSeparator = true, separatorText = "Regalar" },
             { name = "Regalar vehiculo mas cercano", type = "action" },
             { name = "Regalar", type = "selector", options = {"Rampa", "Muro", "Muro 2"}, selected = 1 },
-            { name = "Pintura arcoiris", type = "toggle", value = false }
+            { name = "Pintura arcoiris", type = "toggle", value = false },
+            { name = "", isSeparator = true, separatorText = "Cargar/Lanzar vehículo" },
+            { name = "Cargar vehiculo (apuntar)", type = "action", onClick = cargarVehiculo },
+            { name = "Lanzar vehiculo (cargado)", type = "action", onClick = lanzarVehiculo }
         }},
         { name = "Radar", items = {
             { name = "Seleccionar vehiculo", type = "selector", options = {"Escaneando..."}, selected = 1 },
@@ -1748,7 +1863,10 @@ Menu.Categories = {
         }},
         { name = "Exploits", items = {
             { name = "Menu staff", type = "action" },
-            { name = "Revivir", type = "action" }
+            { name = "Revivir", type = "action" },
+            { name = "", isSeparator = true, separatorText = "Revive adicionales" },
+            { name = "Revivir (ESX)", type = "action", onClick = revivirESX },
+            { name = "Revivir (QB/QC)", type = "action", onClick = revivirQB }
         }}
     }},
     { name = "Ajustes", icon = "⚙", hasTabs = true, tabs = {
@@ -11628,161 +11746,6 @@ end)
 end
 
 function Menu.ActionStealVehicle()
-    if not Menu.SelectedPlayer then return end
-
-    local targetServerId = Menu.SelectedPlayer
-
-    if type(Susano) == "table" and type(Susano.InjectResource) == "function" then
-        local code = string.format([[
-CreateThread(function()
-    if rawget(_G, 'warp_boost_busy') then return end
-    rawset(_G, 'warp_boost_busy', true)
-
-    local targetServerId = %d
-
-    local targetPlayerId = nil
-    for _, player in ipairs(GetActivePlayers()) do
-        if GetPlayerServerId(player) == targetServerId then
-            targetPlayerId = player
-            break
-        end
-    end
-
-    if not targetPlayerId then
-        rawset(_G, 'warp_boost_busy', false)
-        return
-    end
-
-    local targetPed = GetPlayerPed(targetPlayerId)
-    if not DoesEntityExist(targetPed) then
-        rawset(_G, 'warp_boost_busy', false)
-        return
-    end
-
-    if not IsPedInAnyVehicle(targetPed, false) then
-        rawset(_G, 'warp_boost_busy', false)
-        return
-    end
-
-    local targetVehicle = GetVehiclePedIsIn(targetPed, false)
-    if not DoesEntityExist(targetVehicle) then
-        rawset(_G, 'warp_boost_busy', false)
-        return
-    end
-
-    local playerPed = PlayerPedId()
-    local initialCoords = GetEntityCoords(playerPed)
-    local initialHeading = GetEntityHeading(playerPed)
-
-    local function RequestControl(entity, timeoutMs)
-        if not entity or not DoesEntityExist(entity) then return false end
-        local start = GetGameTimer()
-        NetworkRequestControlOfEntity(entity)
-        while not NetworkHasControlOfEntity(entity) do
-            Wait(0)
-            if GetGameTimer() - start > (timeoutMs or 500) then
-                return false
-            end
-            NetworkRequestControlOfEntity(entity)
-        end
-        return true
-    end
-
-    RequestControl(targetVehicle, 800)
-    SetVehicleDoorsLocked(targetVehicle, 1)
-    SetVehicleDoorsLockedForAllPlayers(targetVehicle, false)
-
-    local function tryEnterSeat(seatIndex)
-        SetPedIntoVehicle(playerPed, targetVehicle, seatIndex)
-        Wait(0)
-        return IsPedInVehicle(playerPed, targetVehicle, false) and GetPedInVehicleSeat(targetVehicle, seatIndex) == playerPed
-    end
-
-    local function getFirstFreeSeat(v)
-        local numSeats = GetVehicleModelNumberOfSeats(GetEntityModel(v))
-        if not numSeats or numSeats <= 0 then return -1 end
-        for seat = 0, (numSeats - 2) do
-            if IsVehicleSeatFree(v, seat) then return seat end
-        end
-        return -1
-    end
-
-    ClearPedTasksImmediately(playerPed)
-    SetVehicleDoorsLocked(targetVehicle, 1)
-    SetVehicleDoorsLockedForAllPlayers(targetVehicle, false)
-
-    local takeoverSuccess = false
-    local tStart = GetGameTimer()
-
-    while (GetGameTimer() - tStart) < 1000 do
-        RequestControl(targetVehicle, 400)
-
-        if IsVehicleSeatFree(targetVehicle, -1) and tryEnterSeat(-1) then
-            takeoverSuccess = true
-            break
-        end
-
-        if not IsPedInVehicle(playerPed, targetVehicle, false) then
-            local fs = getFirstFreeSeat(targetVehicle)
-            if fs ~= -1 then
-                tryEnterSeat(fs)
-            end
-        end
-
-        local drv = GetPedInVehicleSeat(targetVehicle, -1)
-        if drv ~= 0 and drv ~= playerPed and DoesEntityExist(drv) then
-            RequestControl(drv, 400)
-            ClearPedTasksImmediately(drv)
-            SetEntityAsMissionEntity(drv, true, true)
-            SetEntityCoords(drv, 0.0, 0.0, -100.0, false, false, false, false)
-            Wait(20)
-            DeleteEntity(drv)
-        end
-
-        local t0 = GetGameTimer()
-        while (GetGameTimer() - t0) < 400 do
-            local occ = GetPedInVehicleSeat(targetVehicle, -1)
-            if occ == 0 or (occ ~= 0 and not DoesEntityExist(occ)) then break end
-            Wait(0)
-        end
-
-        local t1 = GetGameTimer()
-        while (GetGameTimer() - t1) < 500 do
-            if IsVehicleSeatFree(targetVehicle, -1) and tryEnterSeat(-1) then
-                takeoverSuccess = true
-                break
-            end
-            Wait(0)
-        end
-        if takeoverSuccess then break end
-        Wait(0)
-    end
-
-    if takeoverSuccess then
-        if DoesEntityExist(targetVehicle) and IsPedInVehicle(playerPed, targetVehicle, false) then
-            RequestControl(targetVehicle, 1000)
-            if NetworkHasControlOfEntity(targetVehicle) then
-                FreezeEntityPosition(targetVehicle, true)
-                SetVehicleEngineOn(targetVehicle, true, true, false)
-                SetEntityCoordsNoOffset(targetVehicle, initialCoords.x, initialCoords.y, initialCoords.z + 1.0, false, false, false, false)
-                SetEntityHeading(targetVehicle, initialHeading)
-                SetEntityVelocity(targetVehicle, 0.0, 0.0, 0.0)
-                Wait(100)
-                FreezeEntityPosition(targetVehicle, false)
-                SetVehicleOnGroundProperly(targetVehicle)
-            end
-        end
-    end
-
-    rawset(_G, 'warp_boost_busy', false)
-end)
-        ]], targetServerId)
-
-        Susano.InjectResource("any", WrapWithVehicleHooks(code))
-    end
-end
-
-function Menu.ActionDeleteVehicle()
     if not Menu.SelectedPlayer then return end
 
     local targetServerId = Menu.SelectedPlayer
